@@ -340,6 +340,37 @@ body.noclip #app{animation:nc .55s steps(2) 2}
   50%{transform:translate(10px,-3px) skewX(-4deg);filter:invert(.08) saturate(1.5)}
   75%{transform:translate(-5px,2px);filter:hue-rotate(-30deg)}100%{transform:none;filter:none}}
 
+/* 彩蛋：看守者凝視（閒置時出現） */
+.watcher{position:fixed;z-index:118;display:flex;gap:14px;opacity:0;transition:opacity 2.4s ease;pointer-events:none}
+.watcher.show{opacity:1}
+.watcher i{width:15px;height:15px;border-radius:50%;background:#fffbe0;
+  box-shadow:0 0 14px 4px rgba(255,246,194,.8),0 0 42px 12px rgba(232,115,31,.35);
+  animation:wblink 5s infinite}
+@keyframes wblink{0%,90%,100%{transform:scaleY(1)}94%{transform:scaleY(.08)}98%{transform:scaleY(1)}}
+
+/* 彩蛋：傷痕史密斯閃現 */
+.smiler-flash{position:fixed;inset:0;z-index:150;background:#070602;display:flex;align-items:center;justify-content:center;
+  opacity:0;visibility:hidden;transition:opacity .35s;pointer-events:none}
+.smiler-flash.show{opacity:1;visibility:visible}
+.smiler-flash svg{width:min(420px,70vw);animation:bulbflick 2.2s infinite}
+
+/* 彩蛋：LEVEL 404 虛空房 */
+.void-room{background:var(--ink);color:var(--cream);border:2px solid var(--ink);
+  padding:clamp(2.4rem,6vw,4.5rem);position:relative;overflow:hidden}
+.void-room::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.35) 0 1px,transparent 1px 3px);opacity:.35}
+.void-room .eyebrow{color:var(--hazard)}
+.void-room h2{color:var(--cream)}
+.void-room p{color:#d8cf95;line-height:1.85}
+.void-room .stamp{display:inline-block;border:3px double var(--hazard);color:var(--hazard);
+  font-family:var(--mono);letter-spacing:.3em;padding:.7rem 1.6rem;transform:rotate(-4deg);
+  margin:1.4rem 0;font-weight:700}
+
+/* 彩蛋：杏仁水可以偷喝 */
+.almond .bottle{cursor:pointer}
+.bottle.glug{animation:glug .5s ease}
+@keyframes glug{30%{transform:rotate(-14deg) translateY(-6px)}60%{transform:rotate(8deg)}}
+
 /* ============================================================
    RWD
    ============================================================ */
@@ -484,7 +515,7 @@ body.noclip #app{animation:nc .55s steps(2) 2}
     <div>
       <p class="eyebrow">// 訪客須知 — VISITOR PROTOCOL</p>
       <h2 class="title" style="font-size:1.7rem">先喝口杏仁水，再開始探索</h2>
-      <p class="lead">頂部的 <strong>About</strong> 選單裡，收著我新增的研究頁面：關於後室、生存指南、資深粉絲認證。提示：按 <b style="font-family:var(--mono);color:var(--hazard)">[N]</b> 試試 no-clip。</p>
+      <p class="lead">頂部的 <strong>About</strong> 選單裡，收著我新增的研究頁面：關於後室、生存指南、資深粉絲認證。提示：按 <b style="font-family:var(--mono);color:var(--hazard)">[N]</b> 試試 no-clip——如果你知道完整的穿牆咒語，不妨直接打出來。</p>
     </div>
   </div>
 </section>
@@ -871,6 +902,23 @@ body.noclip #app{animation:nc .55s steps(2) 2}
 </section>
 </div>
 
+<!-- ============================================================ LEVEL 404（隱藏層級，無任何入口連結） ============================================================ -->
+<div class="view" id="view-level-404">
+<section class="wrap" style="padding-top:3.5rem">
+  <div class="void-room reveal">
+    <p class="eyebrow">// LEVEL 404 — 此層級不存在於任何索引</p>
+    <h2 class="title" style="font-size:clamp(2rem,6vw,3.6rem)">你不該找到這裡的。</h2>
+    <p style="max-width:62ch">歡迎來到遺失層級。沒有地毯、沒有嗡鳴，只有這行字和你。<br>
+    能唸出完整穿牆咒語走到這裡的人，不是迷路的訪客——是真正把後室刻進肌肉記憶的住民。</p>
+    <div class="stamp">★ NO-CLIPPER 認證 ★</div>
+    <p style="font-family:var(--mono);font-size:.8rem;color:#a99e63">隱藏徽章已解鎖 · 全站第 9 枚 · 持有者：真·資深粉絲</p>
+    <div class="btn-row" style="margin-top:1.6rem">
+      <a class="btn btn-ghost" data-go="home" style="border-color:var(--cream);color:var(--cream)">▸ 沿著燈光走回 LEVEL 0</a>
+    </div>
+  </div>
+</section>
+</div>
+
 <!-- ===== 頁尾 ===== -->
 <footer>
   <div class="foot-grid">
@@ -891,7 +939,7 @@ body.noclip #app{animation:nc .55s steps(2) 2}
     <div class="foot-cell">
       <h4>聯絡 / 提示</h4>
       <p>同好聯絡：<br><a href="mailto:s10150410@gmail.com?subject=關於後室">寄一封信到走廊盡頭</a></p>
-      <p style="margin-top:1rem">彩蛋：按 <b style="font-family:var(--mono);color:var(--hazard)">[N]</b> 觸發 no-clip，點右上「關燈」進入黑暗探索。</p>
+      <p style="margin-top:1rem">彩蛋：按 <b style="font-family:var(--mono);color:var(--hazard)">[N]</b>、點右上「關燈」。傳聞：完整唸出穿牆咒語會墜入不存在的層級；燈泡禁不起連點；杏仁水可以偷喝；發呆太久會被盯上；連主控台裡都有住民。</p>
     </div>
   </div>
   <div class="foot-bottom">
@@ -903,11 +951,17 @@ body.noclip #app{animation:nc .55s steps(2) 2}
 
 <button class="totop" aria-label="回到頂端">↑</button>
 <div class="noclip-toast" id="ncToast">// NO-CLIP EVENT</div>
+<div class="watcher" id="watcherEyes"><i></i><i></i></div>
+<div class="smiler-flash" id="smilerFlash"><svg viewBox="0 0 240 140" fill="none" stroke="#fffbe0" stroke-linecap="round" stroke-width="4" role="img" aria-label="黑暗中的傷痕史密斯">
+  <path d="M86,48 q10,-10 21,0 M133,48 q10,-10 21,0"/>
+  <path d="M70,70 Q120,112 170,70"/>
+  <path d="M78,76 Q120,108 162,76" stroke-width="1.5" stroke-dasharray="7 6" opacity=".8"/>
+</svg></div>
 
 <script>
 (function(){
-  var views=['home','levels','entities','about','survival','fan-cred'];
-  var titleMap={home:'首頁',levels:'層級圖鑑',entities:'實體檔案',about:'關於後室',survival:'生存指南','fan-cred':'資深粉絲認證'};
+  var views=['home','levels','entities','about','survival','fan-cred','level-404'];
+  var titleMap={home:'首頁',levels:'層級圖鑑',entities:'實體檔案',about:'關於後室',survival:'生存指南','fan-cred':'資深粉絲認證','level-404':'LEVEL 404 — ???'};
   var aboutGroup=['about','survival','fan-cred'];
   var root=document.documentElement;
 
@@ -991,13 +1045,65 @@ body.noclip #app{animation:nc .55s steps(2) 2}
   window.addEventListener('scroll',function(){top.classList.toggle('show',window.scrollY>500);});
   top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
 
-  /* ---- noclip 彩蛋 ---- */
+  /* ---- 彩蛋套件 ---- */
   var toast=document.getElementById('ncToast');
+  function showToast(msg,ms){toast.textContent=msg;toast.classList.add('show');
+    clearTimeout(showToast._t);showToast._t=setTimeout(function(){toast.classList.remove('show');},ms||1600);}
+
+  /* [N] 小故障；完整輸入 noclip → 墜入 LEVEL 404 */
+  var buf='';
   document.addEventListener('keydown',function(e){
-    if((e.key==='n'||e.key==='N')&&!/input|textarea/i.test(e.target.tagName)){
-      document.body.classList.add('noclip');toast.classList.add('show');
-      setTimeout(function(){document.body.classList.remove('noclip');},1100);
-      setTimeout(function(){toast.classList.remove('show');},1400);}});
+    if(/input|textarea/i.test(e.target.tagName))return;
+    if(e.key&&e.key.length===1)buf=(buf+e.key.toLowerCase()).slice(-6);
+    if(e.key==='n'||e.key==='N'){
+      document.body.classList.add('noclip');showToast('// NO-CLIP EVENT',1400);
+      setTimeout(function(){document.body.classList.remove('noclip');},1100);}
+    if(buf==='noclip'){buf='';
+      document.body.classList.add('noclip');showToast('// NO-CLIP SUCCESSFUL — 墜入 LEVEL 404',2200);
+      setTimeout(function(){document.body.classList.remove('noclip');location.hash='level-404';},900);}
+  });
+
+  /* 杏仁水可以偷喝 */
+  var sips=0;
+  document.addEventListener('click',function(e){
+    var b=e.target.closest('.bottle');if(!b)return;
+    b.classList.remove('glug');void b.offsetWidth;b.classList.add('glug');
+    sips++;
+    showToast(sips<3?'// 咕嚕…杏仁水 +1（'+sips+'/3）':sips===3?'// 後室化 −3%，理智恢復 ✔':'// 你喝太多了。史密斯先生表示讚許 =)',1700);
+  });
+
+  /* 燈泡禁不起連點：六下 → 它出現了 */
+  var bulbHits=0,bulb=document.querySelector('.brand .bulb'),smiler=document.getElementById('smilerFlash');
+  if(bulb){bulb.style.cursor='pointer';
+    bulb.addEventListener('click',function(e){e.stopPropagation();
+      bulbHits++;
+      if(bulbHits>=6){bulbHits=0;smiler.classList.add('show');
+        setTimeout(function(){smiler.classList.remove('show');showToast('// 不要再玩燈了。',1800);},1300);}
+      else if(bulbHits>=3){showToast('// 燈泡：'+bulbHits+'/6 …別這樣。',1100);}});}
+
+  /* 發呆 45 秒 → 看守者凝視 */
+  var watcher=document.getElementById('watcherEyes'),idleT;
+  function resetIdle(){watcher.classList.remove('show');clearTimeout(idleT);
+    idleT=setTimeout(function(){
+      watcher.style.left=(8+Math.random()*70)+'vw';
+      watcher.style.top=(12+Math.random()*60)+'vh';
+      watcher.classList.add('show');},45000);}
+  ['mousemove','keydown','scroll','touchstart','click'].forEach(function(ev){
+    window.addEventListener(ev,resetIdle,{passive:true});});
+  resetIdle();
+
+  /* 切到別的分頁 → 它注意到了 */
+  var prevTitle=null;
+  document.addEventListener('visibilitychange',function(){
+    if(document.hidden){prevTitle=document.title;document.title='👁 它注意到你離開了';}
+    else if(prevTitle){document.title='歡迎回來，住民';
+      setTimeout(function(){document.title=prevTitle;prevTitle=null;},2500);}});
+
+  /* 連主控台都有住民 */
+  try{
+    console.log('%c你也會看主控台？果然是資深住民。','color:#e8731f;font-size:16px;font-weight:bold');
+    console.log('%c> 提示：在頁面上慢慢輸入  n o c l i p','color:#2b7a69;font-size:12px');
+  }catch(_){}
 
   activate(location.hash.replace('#','')||'home');
 })();
