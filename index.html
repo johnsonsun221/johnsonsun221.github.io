@@ -249,6 +249,22 @@ p.lead{font-size:1.08rem;line-height:1.85;color:var(--ink-soft);max-width:64ch;f
 .card:hover .danger-bar{background:rgba(255,255,255,.08);border-color:rgba(255,246,194,.2)}
 .danger-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--safe),#d9b62e,var(--danger));transition:width 1s ease}
 
+/* 標本速寫圖版（實體檔案用） */
+.specimen{margin:1rem 0 0;border:1px solid var(--line);color:var(--ink-2);
+  background:repeating-linear-gradient(0deg,rgba(33,29,12,.05) 0 1px,transparent 1px 16px),
+  repeating-linear-gradient(90deg,rgba(33,29,12,.05) 0 1px,transparent 1px 16px),rgba(255,246,194,.3)}
+.specimen svg{display:block;width:100%;height:auto}
+.specimen .crea{transition:transform .35s ease}
+.card:hover .specimen{color:var(--cream);border-color:rgba(255,246,194,.3);
+  background:repeating-linear-gradient(0deg,rgba(255,246,194,.07) 0 1px,transparent 1px 16px),
+  repeating-linear-gradient(90deg,rgba(255,246,194,.07) 0 1px,transparent 1px 16px),rgba(255,246,194,.04)}
+.card:hover .specimen .crea{transform:translateY(-4px)}
+.fig{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.6rem;
+  letter-spacing:.14em;color:var(--ink-soft);border:1px solid var(--line);border-top:0;
+  padding:.32rem .6rem;margin-bottom:.2rem}
+.card:hover .fig{color:#a99e63;border-color:rgba(255,246,194,.3)}
+.glowflick{animation:bulbflick 4.5s infinite}
+
 /* 提示框 */
 .note{border-left:4px solid var(--danger);background:rgba(193,69,43,.08);padding:1.2rem 1.4rem;
   margin:1.6rem 0;font-size:.96rem;line-height:1.75;font-family:var(--sans)}
@@ -527,28 +543,161 @@ body.noclip #app{animation:nc .55s steps(2) 2}
     <p class="sub">後室裡你並不孤單。這些「實體」與你共享走廊——有的無害，有的會模仿人聲，有的只要看你一眼，你就完了。以下是我整理的危險生物名錄。</p></div>
   </div>
   <div class="grid">
-    <article class="card reveal"><div class="num"><span>實體 0</span><span>E-0</span></div><h3>笨拙 Clumps</h3>
+    <article class="card reveal"><div class="num"><span>實體 0</span><span>E-0</span></div>
+      <figure class="specimen"><svg viewBox="0 0 240 140" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="笨拙：毛髮與牙齒纏成的肉團速寫">
+        <path d="M30,116 L210,116" stroke-width="1" stroke-dasharray="2 6" opacity=".6"/>
+        <g class="crea">
+          <path d="M82,84 C74,60 94,44 120,46 C146,40 166,56 162,80 C170,100 146,114 120,110 C96,116 88,102 82,84 Z" stroke-width="2.5"/>
+          <path d="M100,70 q10,-8 20,0 q10,8 20,0" stroke-width="1.2" opacity=".55"/>
+          <path d="M96,88 q14,10 30,2" stroke-width="1.2" opacity=".55"/>
+          <path d="M84,62 q-12,-10 -16,-22 M122,46 q2,-14 -4,-22 M158,60 q12,-8 20,-16 M164,92 q14,4 22,12 M100,110 q-6,12 -16,16" stroke-width="1.4"/>
+          <path d="M112,64 l5,9 h-10 z M134,80 l5,9 h-10 z M104,92 l4,7 h-8 z" fill="currentColor" stroke="none" opacity=".8"/>
+        </g>
+        <path d="M70,40 A52,52 0 0 1 118,25" stroke-width="1.2" opacity=".6"/>
+        <path d="M118,25 l-9,-2 m9,2 l-7,6" stroke-width="1.2" opacity=".6"/>
+      </svg></figure><div class="fig"><span>FIG. E-0 — 現場速寫</span><span>FIELD SKETCH</span></div>
+      <h3>笨拙 Clumps</h3>
       <p>由毛髮、皮膚與牙齒纏成的肉團，緩慢地在地上滾動。行動遲緩，但別讓它碰到你——它會把你也捲進去。</p>
       <div class="tag-row"><span class="tag warn">敵對</span><span class="tag neutral">移動緩慢</span></div></article>
-    <article class="card reveal"><div class="num"><span>實體 1</span><span>E-1</span></div><h3>獵犬 Hounds</h3>
+    <article class="card reveal"><div class="num"><span>實體 1</span><span>E-1</span></div>
+      <figure class="specimen"><svg viewBox="0 0 240 140" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="獵犬：瘦長四足掠食者速寫">
+        <path d="M28,118 L214,118" stroke-width="1" stroke-dasharray="2 6" opacity=".6"/>
+        <g class="crea">
+          <path d="M62,58 C84,46 120,52 142,68 C156,78 166,88 176,96" stroke-width="2.5"/>
+          <path d="M176,96 l24,6 l-4,9 l-22,-7" stroke-width="2.2"/>
+          <path d="M176,104 l6,4 l5,-3 l5,4 l6,-3" stroke-width="1.5"/>
+          <path d="M183,95 l4,4 m0,-4 l-4,4" stroke-width="1.4"/>
+          <path d="M150,80 L145,100 L152,118 M160,84 L159,104 L168,118" stroke-width="2.2"/>
+          <path d="M66,60 L56,86 L62,118 M76,64 L72,92 L84,118" stroke-width="2.2"/>
+          <path d="M62,58 q-14,-2 -20,8" stroke-width="1.6"/>
+          <path d="M100,58 l-3,14 M112,60 l-3,14 M124,63 l-3,13 M136,67 l-3,12" stroke-width="1" opacity=".5"/>
+        </g>
+        <path d="M198,82 q8,-6 6,-16 M207,86 q12,-9 9,-25" stroke-width="1.2" stroke-dasharray="3 4" opacity=".7"/>
+      </svg></figure><div class="fig"><span>FIG. E-1 — 現場速寫</span><span>FIELD SKETCH</span></div>
+      <h3>獵犬 Hounds</h3>
       <p>瘦長、人形、長著利齒的掠食者。視力差，但聽覺敏銳。保持安靜，緩慢移動，別讓它聽見你的腳步。</p>
       <div class="tag-row"><span class="tag warn">高度敵對</span><span class="tag warn">聽聲辨位</span></div></article>
-    <article class="card reveal"><div class="num"><span>實體 3</span><span>E-3</span></div><h3>傷痕史密斯 Smilers</h3>
+    <article class="card reveal"><div class="num"><span>實體 3</span><span>E-3</span></div>
+      <figure class="specimen"><svg viewBox="0 0 240 140" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="傷痕史密斯：黑暗中發光的眼與咧嘴速寫">
+        <rect x="58" y="16" width="124" height="96" rx="10" fill="#0c0a04" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M58,112 L34,128 M182,112 L206,128" stroke-width="1" opacity=".5"/>
+        <g class="crea glowflick" stroke="#fffbe0">
+          <path d="M96,50 q8,-8 17,0 M128,50 q8,-8 17,0" stroke-width="3"/>
+          <path d="M84,70 Q120,100 156,70" stroke-width="3"/>
+          <path d="M90,74 Q120,98 150,74" stroke-width="1.2" stroke-dasharray="6 5" opacity=".8"/>
+        </g>
+      </svg></figure><div class="fig"><span>FIG. E-3 — 低光環境目擊</span><span>FIELD SKETCH</span></div>
+      <h3>傷痕史密斯 Smilers</h3>
       <p>黑暗中漂浮的一張嘴與兩隻眼。只在低光環境出現。看見它時別直視，緩緩退向有光處。</p>
       <div class="tag-row"><span class="tag warn">敵對</span><span class="tag neutral">畏光</span></div></article>
-    <article class="card reveal"><div class="num"><span>實體 7</span><span>E-7</span></div><h3>那個女人 The Woman</h3>
+    <article class="card reveal"><div class="num"><span>實體 7</span><span>E-7</span></div>
+      <figure class="specimen"><svg viewBox="0 0 240 140" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="那個女人：遠處呼喚的人影速寫">
+        <path d="M28,118 L214,118" stroke-width="1" stroke-dasharray="2 6" opacity=".6"/>
+        <g class="crea">
+          <circle cx="150" cy="38" r="10" stroke-width="2.2"/>
+          <path d="M141,33 C136,58 138,76 142,94 M159,33 C164,58 162,80 158,94" stroke-width="1.6"/>
+          <path d="M143,48 C138,70 134,96 130,116 M157,48 C162,70 166,96 170,116" stroke-width="2.2"/>
+          <path d="M144,56 C134,76 131,94 133,108 M156,56 C166,76 169,96 167,110" stroke-width="1.7"/>
+          <path d="M146,42 q4,3 8,0" stroke-width="2"/>
+        </g>
+        <g stroke="#c1452b" stroke-width="1.3" stroke-dasharray="4 4" opacity=".85">
+          <path d="M128,36 q-10,6 -10,16"/>
+          <path d="M119,30 q-15,9 -15,25"/>
+          <path d="M110,24 q-20,12 -20,34"/>
+        </g>
+      </svg></figure><div class="fig"><span>FIG. E-7 — 保持距離</span><span>FIELD SKETCH</span></div>
+      <h3>那個女人 The Woman</h3>
       <p>遠看是溫柔的女子，會喊出你熟悉之人的聲音引你靠近。靠近後——別。它已奪走無數想家的住民。</p>
       <div class="tag-row"><span class="tag warn">致命</span><span class="tag warn">擬聲</span></div></article>
-    <article class="card reveal"><div class="num"><span>派對客</span><span>P-GO</span></div><h3>派對客 Partygoers</h3>
+    <article class="card reveal"><div class="num"><span>派對客</span><span>P-GO</span></div>
+      <figure class="specimen"><svg viewBox="0 0 240 140" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="派對客：戴派對帽、縫線笑容的人形速寫">
+        <path d="M28,118 L214,118" stroke-width="1" stroke-dasharray="2 6" opacity=".6"/>
+        <g class="crea">
+          <circle cx="92" cy="46" r="16" stroke-width="2.2"/>
+          <path d="M84,33 L92,12 L102,34" stroke-width="2"/>
+          <circle cx="92" cy="11" r="2.5" fill="currentColor" stroke="none"/>
+          <circle cx="86" cy="44" r="1.8" fill="currentColor" stroke="none"/>
+          <circle cx="98" cy="44" r="1.8" fill="currentColor" stroke="none"/>
+          <path d="M82,52 q10,10 20,0" stroke="#c1452b" stroke-width="2" stroke-dasharray="4 3"/>
+          <path d="M92,62 L92,94 M92,68 L74,82 M92,68 L112,74 M92,94 L80,118 M92,94 L104,118" stroke-width="2.2"/>
+          <path d="M112,74 C120,60 122,48 124,40" stroke-width="1.2"/>
+          <ellipse cx="126" cy="28" rx="11" ry="13" stroke="#c1452b" stroke-width="2" fill="rgba(193,69,43,.18)"/>
+          <path d="M123,40 l3,4 l3,-4" stroke="#c1452b" stroke-width="1.4"/>
+        </g>
+        <g fill="currentColor" stroke="none" opacity=".5">
+          <rect x="150" y="58" width="5" height="5" transform="rotate(20 152 60)"/>
+          <rect x="168" y="42" width="4" height="4" transform="rotate(-15 170 44)"/>
+          <rect x="160" y="84" width="5" height="5" transform="rotate(35 162 86)"/>
+          <circle cx="180" cy="68" r="2.4"/><circle cx="44" cy="42" r="2.2"/><circle cx="54" cy="76" r="2"/>
+        </g>
+      </svg></figure><div class="fig"><span>FIG. P-GO — 強制微笑區</span><span>FIELD SKETCH</span></div>
+      <h3>派對客 Partygoers</h3>
       <p>Level Fun 的居民。戴著詭異面具、強迫你「享受派對」的人形實體。不微笑、想離開的人會被它們「處理」。</p>
       <div class="tag-row"><span class="tag warn">敵對</span><span class="tag neutral">群體行動</span></div></article>
-    <article class="card reveal"><div class="num"><span>友善實體</span><span>ALLY</span></div><h3>史密斯先生 Mr. Smiles</h3>
+    <article class="card reveal"><div class="num"><span>友善實體</span><span>ALLY</span></div>
+      <figure class="specimen"><svg viewBox="0 0 240 140" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="史密斯先生：微笑揮手、以杏仁水交易的友善實體速寫">
+        <path d="M28,118 L214,118" stroke-width="1" stroke-dasharray="2 6" opacity=".6"/>
+        <g class="crea">
+          <circle cx="92" cy="52" r="20" stroke-width="2.4"/>
+          <path d="M82,46 q4,-5 8,0 M102,46 q4,-5 8,0" stroke-width="2"/>
+          <path d="M80,56 q12,12 24,0" stroke="#2b7a69" stroke-width="2.6"/>
+          <path d="M92,72 L92,100 M92,78 L122,86 M92,78 L70,64 M92,100 L82,118 M92,100 L102,118" stroke-width="2.2"/>
+          <path d="M64,56 q-5,-6 -3,-13 M58,62 q-8,-7 -7,-17" stroke-width="1.1" opacity=".6"/>
+        </g>
+        <g>
+          <rect x="128" y="72" width="14" height="30" rx="4" stroke-width="2" fill="rgba(255,246,194,.45)"/>
+          <rect x="131.5" y="65" width="7" height="6" fill="currentColor" stroke="none"/>
+          <path d="M130,84 h10" stroke-width="1"/>
+        </g>
+        <g stroke="#2b7a69" stroke-width="1.3" stroke-dasharray="4 4">
+          <path d="M112,66 q12,-8 24,-2"/><path d="M136,68 l1,-5 m-1,5 l-5,-1"/>
+          <path d="M134,108 q-12,8 -24,2"/><path d="M110,110 l-1,5 m1,-5 l5,1"/>
+        </g>
+      </svg></figure><div class="fig"><span>FIG. ALLY — 可安全接觸</span><span>FIELD SKETCH</span></div>
+      <h3>史密斯先生 Mr. Smiles</h3>
       <p>少數友善的實體之一。會與住民交易杏仁水與物資。對它有禮貌，它便是黑暗中難得的盟友。</p>
       <div class="tag-row"><span class="tag safe">友善</span><span class="tag safe">可交易</span></div></article>
-    <article class="card reveal"><div class="num"><span>實體 96</span><span>E-96</span></div><h3>面容竊賊 Skin-Stealers</h3>
+    <article class="card reveal"><div class="num"><span>實體 96</span><span>E-96</span></div>
+      <figure class="specimen"><svg viewBox="0 0 240 140" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="面容竊賊：臉部與胸口有縫線的擬人速寫">
+        <g class="crea">
+          <circle cx="120" cy="46" r="22" stroke-width="2.4"/>
+          <path d="M86,120 C88,92 100,80 120,80 C140,80 152,92 154,120" stroke-width="2.4"/>
+          <circle cx="111" cy="48" r="3.5" fill="currentColor" stroke="none"/>
+          <path d="M130,48 l10,0" stroke-width="2.5"/>
+          <path d="M112,64 l16,0" stroke-width="2"/>
+          <g stroke="#c1452b" stroke-width="1.6" stroke-dasharray="5 4">
+            <path d="M102,36 Q120,29 138,38"/>
+            <path d="M133,52 Q139,60 134,68"/>
+            <path d="M110,75 Q120,79 130,75"/>
+            <path d="M100,96 Q120,104 140,96"/>
+            <path d="M96,112 L118,93"/>
+          </g>
+          <g stroke-width="1" opacity=".75">
+            <path d="M109,31 l4,4 m0,-4 l-4,4 M125,30 l4,4 m0,-4 l-4,4 M134,59 l4,4 m0,-4 l-4,4 M118,75 l4,4 m0,-4 l-4,4 M108,97 l4,4 m0,-4 l-4,4 M130,98 l4,4 m0,-4 l-4,4"/>
+          </g>
+        </g>
+      </svg></figure><div class="fig"><span>FIG. E-96 — 檢查接縫</span><span>FIELD SKETCH</span></div>
+      <h3>面容竊賊 Skin-Stealers</h3>
       <p>能模仿人類外型，混入住民群體。辨識法：它的動作略顯僵硬，皮膚邊緣有不自然的接縫。多疑能保命。</p>
       <div class="tag-row"><span class="tag warn">致命</span><span class="tag warn">擬態</span></div></article>
-    <article class="card reveal"><div class="num"><span>守護者</span><span>WTCH</span></div><h3>看守者 The Watchers</h3>
+    <article class="card reveal"><div class="num"><span>守護者</span><span>WTCH</span></div>
+      <figure class="specimen"><svg viewBox="0 0 240 140" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="看守者：凝視渺小行人的巨眼速寫">
+        <path d="M28,131 L214,131" stroke-width="1" stroke-dasharray="2 6" opacity=".6"/>
+        <g class="crea">
+          <path d="M50,50 Q120,8 190,50 Q120,92 50,50 Z" stroke-width="2.6"/>
+          <circle cx="120" cy="50" r="17" stroke-width="2.2"/>
+          <circle cx="120" cy="50" r="7" fill="#e8731f" stroke="none"/>
+          <circle cx="115" cy="45" r="2" fill="#fffbe0" stroke="none"/>
+        </g>
+        <g stroke="#e8731f" stroke-width="1.1" stroke-dasharray="3 5" opacity=".7">
+          <path d="M120,70 L100,116 M120,70 L112,118 M120,70 L128,118 M120,70 L140,116"/>
+        </g>
+        <g stroke-width="1.8">
+          <circle cx="118" cy="104" r="4.5"/>
+          <path d="M118,108 L118,121 M118,121 L112,131 M118,121 L124,131 M118,112 L112,117 M118,112 L124,116"/>
+        </g>
+      </svg></figure><div class="fig"><span>FIG. WTCH — 它一直在看</span><span>FIELD SKETCH</span></div>
+      <h3>看守者 The Watchers</h3>
       <p>並非攻擊性實體，只是「看著」。當你感到背後有視線卻空無一人時，它就在那。無害，但會慢慢磨耗你的神智。</p>
       <div class="tag-row"><span class="tag neutral">中立</span><span class="tag neutral">精神壓迫</span></div></article>
   </div>
