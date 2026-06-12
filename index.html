@@ -449,6 +449,32 @@ body.noclip #app{animation:nc .55s steps(2) 2}
 .vhs-btn::after{content:"";margin-left:5px;border-style:solid;
   border-width:14px 0 14px 24px;border-color:transparent transparent transparent #fffbe0}
 
+/* 圖鑑加密檔案（點擊解密，localStorage 記錄進度） */
+.specimen{position:relative}
+.card .lv{display:none}.card.locked .lv{display:block}
+.card .tv{display:block}.card.locked .tv{display:none}
+.card.locked{cursor:pointer;background:rgba(10,9,3,.9);color:#b3a86f}
+.card.locked:hover{background:#070602}
+.card.locked .num{color:#8f8552}
+.card.locked h3{font-family:var(--mono);letter-spacing:.4em;color:#cfc790}
+.card.locked .fig{color:#8f8552;border-color:rgba(255,246,194,.2)}
+.card.locked .photo img{filter:brightness(.16) sepia(.4) contrast(1.25)}
+.card.locked .specimen{filter:brightness(.5) contrast(1.15)}
+.veil{position:absolute;inset:0;z-index:3;display:flex;align-items:center;justify-content:center;
+  background:rgba(7,6,2,.55);color:#cfc790;font-family:var(--mono);font-size:2.4rem;
+  letter-spacing:.3em;text-shadow:0 0 14px rgba(0,0,0,.9);pointer-events:none}
+.card:not(.locked) .veil{display:none}
+.redact{display:block;height:.72em;margin:.34em 0;border-radius:2px;max-width:100%;
+  background:repeating-linear-gradient(90deg,#46401f 0 12px,#332e15 12px 24px);opacity:.65}
+.lv .hint{font-family:var(--mono);font-size:.72rem;color:var(--hazard);letter-spacing:.12em;margin-top:.9rem}
+.scanline-bar{height:6px;border:1px solid rgba(255,246,194,.25);margin:.9rem 0;overflow:hidden;position:relative}
+.scanline-bar::after{content:"";position:absolute;inset:0;
+  background:repeating-linear-gradient(90deg,rgba(232,115,31,.55) 0 10px,transparent 10px 20px);
+  animation:scanmove 1s linear infinite}
+@keyframes scanmove{to{transform:translateX(20px)}}
+.unlock-flash{animation:nc .5s steps(2) 1}
+.dexbar{font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;color:var(--hazard);margin:.7rem 0 0}
+
 /* 彩蛋：杏仁水可以偷喝 */
 .almond .bottle{cursor:pointer}
 .bottle.glug{animation:glug .5s ease}
@@ -666,7 +692,8 @@ body.noclip #app{animation:nc .55s steps(2) 2}
 <section class="wrap" style="padding-top:3.5rem">
   <div class="sec-head reveal"><span class="ix">01</span>
     <div><p class="eyebrow">// ARCHIVE — 層級圖鑑</p><h2 class="title">層級圖鑑 <em>Levels</em></h2>
-    <p class="sub">後室由無數「層級」組成，每一層都有自己的物理法則、危險度與居民。以下是我親自踏查、整理出的 16 個經典層級檔案——Level 0 到 11 連號全收，外加高警戒與傳說層級。危險條越紅，越別久留。</p></div>
+    <p class="sub">後室由無數「層級」組成，每一層都有自己的物理法則、危險度與居民。以下是我親自踏查、整理出的 18 個層級檔案——Level 0 到 11 連號全收，外加高警戒、傳說與<strong>加密層級</strong>。危險條越紅，越別久留。</p>
+    <p class="dexbar" id="dexLevels"></p></div>
   </div>
   <div class="grid">
     <article class="card reveal"><div class="num"><span>LEVEL 0</span><span>★</span></div>
@@ -765,6 +792,38 @@ body.noclip #app{animation:nc .55s steps(2) 2}
       <div class="danger-bar" data-level="10"><i></i></div>
       <p>傳說中的最終層級。穿過那扇門，據說就能回到現實——但沒有人能證實，因為回去的人，再也沒回來說過。</p>
       <div class="tag-row"><span class="tag neutral">未知</span><span class="tag safe">傳說出口</span></div></article>
+    <article class="card reveal locked" data-file="lv-94">
+      <div class="lv"><div class="num"><span>LEVEL ???</span><span>🔒</span></div></div>
+      <div class="tv"><div class="num"><span>LEVEL 94</span><span>★★</span></div></div>
+      <figure class="photo"><img src="https://static.wikia.nocookie.net/backrooms/images/b/bc/Level_94_background.jpg/revision/latest/scale-to-width-down/900?cb=20230102082528" alt="Level 94 卡通世界：蠟筆畫風的奇異原野" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('figure').style.display='none'"><span class="ph-tag">ARCHIVE PHOTO · CC BY-SA</span><span class="veil">？？？</span></figure>
+      <div class="lv">
+        <h3>？？？</h3>
+        <div class="scanline-bar"></div>
+        <p><span class="redact" style="width:92%"></span><span class="redact" style="width:76%"></span><span class="redact" style="width:60%"></span></p>
+        <p class="hint">// 檔案已加密 — 點擊解密 DECLASSIFY</p>
+      </div>
+      <div class="tv">
+        <h3>卡通世界 Motion</h3>
+        <div class="danger-bar" data-level="30"><i></i></div>
+        <p>畫風突變的層級——天空像蠟筆塗的，房子像紙板搭的，物理法則改用卡通邏輯。看似歡樂，但待太久的住民會慢慢「卡通化」，離開時臉上的笑容就拿不下來了。</p>
+        <div class="tag-row"><span class="tag safe">危險度 2/5</span><span class="tag warn">卡通化</span></div>
+      </div></article>
+    <article class="card reveal locked" data-file="lv-hub">
+      <div class="lv"><div class="num"><span>LEVEL ???</span><span>🔒</span></div></div>
+      <div class="tv"><div class="num"><span>THE HUB</span><span>◈</span></div></div>
+      <figure class="photo"><img src="https://static.wikia.nocookie.net/backrooms/images/c/c6/Now_THIS_is_the_hub.png/revision/latest/scale-to-width-down/900?cb=20240922202337" alt="The Hub 樞紐：布滿管線與門的混凝土大廳" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('figure').style.display='none'"><span class="ph-tag">ARCHIVE PHOTO · CC BY-SA</span><span class="veil">？？？</span></figure>
+      <div class="lv">
+        <h3>？？？</h3>
+        <div class="scanline-bar"></div>
+        <p><span class="redact" style="width:88%"></span><span class="redact" style="width:70%"></span><span class="redact" style="width:55%"></span></p>
+        <p class="hint">// 檔案已加密 — 點擊解密 DECLASSIFY</p>
+      </div>
+      <div class="tv">
+        <h3>樞紐 The Hub</h3>
+        <div class="danger-bar" data-level="45"><i></i></div>
+        <p>傳說所有層級的門最終都通向這座布滿管線的混凝土大廳。牆上的每一扇門只能打開一次，再回頭就通往別處。M.E.G. 在此設有最大的前哨站。</p>
+        <div class="tag-row"><span class="tag neutral">交通樞紐</span><span class="tag warn">門不可逆</span></div>
+      </div></article>
   </div>
   <div class="note reveal" style="margin-top:2.5rem">
     <b>檔案管理員筆記：</b> 層級編號並不代表危險度高低，也不代表抵達順序。後室的拓樸是非歐幾里得的——你可能在黃室走一道門，就直接掉進 Level !。永遠帶著杏仁水。
@@ -778,7 +837,8 @@ body.noclip #app{animation:nc .55s steps(2) 2}
 <section class="wrap" style="padding-top:3.5rem">
   <div class="sec-head reveal"><span class="ix">02</span>
     <div><p class="eyebrow">// ARCHIVE — 實體檔案</p><h2 class="title">實體檔案 <em>Entities</em></h2>
-    <p class="sub">後室裡你並不孤單。這些「實體」與你共享走廊——有的無害，有的會模仿人聲，有的只要看你一眼，你就完了。以下是我整理的 14 件實體檔案，從致命到友善，每一件都附上我的現場速寫。</p></div>
+    <p class="sub">後室裡你並不孤單。這些「實體」與你共享走廊——有的無害，有的會模仿人聲，有的只要看你一眼，你就完了。以下是我整理的 16 件實體檔案，從致命到友善，每一件都附上我的現場速寫——包括兩件<strong>未確認檔案</strong>。</p>
+    <p class="dexbar" id="dexEntities"></p></div>
   </div>
   <div class="grid">
     <article class="card reveal"><div class="num"><span>實體 0</span><span>E-0</span></div>
@@ -1051,6 +1111,56 @@ body.noclip #app{animation:nc .55s steps(2) 2}
       <h3>傑瑞 Jerry</h3>
       <p>一隻圓滾滾的藍色大鳥，後室最受愛戴的存在——甚至有住民組成「傑瑞信徒會」定期供奉莓果。被傑瑞停在肩上，據說會帶來三天的好運。我信了。</p>
       <div class="tag-row"><span class="tag safe">友善</span><span class="tag safe">有信徒會</span></div></article>
+    <article class="card reveal locked" data-file="en-nwatch">
+      <div class="lv"><div class="num"><span>？？？</span><span>🔒</span></div></div>
+      <div class="tv"><div class="num"><span>鄰里守望</span><span>N-WTC</span></div></div>
+      <figure class="specimen"><svg viewBox="0 0 240 140" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="鄰里守望：提手電筒巡邏的微笑人形速寫">
+        <path d="M28,122 L214,122" stroke-width="1" stroke-dasharray="2 6" opacity=".6"/>
+        <g class="crea">
+          <circle cx="140" cy="38" r="10" stroke-width="2.2"/>
+          <path d="M133,43 q8,8 16,-1" stroke="#c1452b" stroke-width="2"/>
+          <path d="M124,122 C126,92 132,62 140,60 C148,62 154,92 156,122" stroke-width="2.4"/>
+          <path d="M134,66 L106,80 M148,68 L158,108" stroke-width="2"/>
+          <rect x="94" y="74" width="13" height="9" rx="2" stroke-width="1.8" transform="rotate(-18 100 78)"/>
+          <path d="M90,72 L44,52 M92,84 L42,92" stroke-width="1.1" stroke-dasharray="4 4" opacity=".7"/>
+          <path d="M44,52 Q36,72 42,92" stroke-width="1.1" stroke-dasharray="4 4" opacity=".7"/>
+        </g>
+        <path d="M196,60 q6,-10 2,-18 M204,64 q9,-12 5,-26" stroke-width="1.1" stroke-dasharray="3 4" opacity=".5"/>
+      </svg><span class="veil">？</span></figure>
+      <div class="lv"><div class="fig"><span>FIG. ??? — 資料加密</span><span>CLASSIFIED</span></div>
+        <h3>？？？</h3>
+        <div class="scanline-bar"></div>
+        <p><span class="redact" style="width:90%"></span><span class="redact" style="width:72%"></span><span class="redact" style="width:58%"></span></p>
+        <p class="hint">// 檔案已加密 — 點擊解密 DECLASSIFY</p></div>
+      <div class="tv"><div class="fig"><span>FIG. N-WTC — 別應門</span><span>FIELD SKETCH</span></div>
+        <h3>鄰里守望 Neighborhood Watch</h3>
+        <p>Level 9 的「居民」。深夜提著手電筒巡邏的人形，西裝筆挺、過分友善，會微笑著邀請你「回家坐坐」。它們的笑容在手電筒光下沒有影子——這是唯一的破綻。</p>
+        <div class="tag-row"><span class="tag warn">高度敵對</span><span class="tag neutral">Level 9 限定</span></div></div></article>
+    <article class="card reveal locked" data-file="en-thing7">
+      <div class="lv"><div class="num"><span>？？？</span><span>🔒</span></div></div>
+      <div class="tv"><div class="num"><span>七層之物</span><span>T-7</span></div></div>
+      <figure class="specimen"><svg viewBox="0 0 240 140" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="七層之物：深水下的龐大陰影速寫">
+        <path d="M28,52 q8,-4 16,0 t16,0 t16,0 t16,0 t16,0 t16,0 t16,0 t16,0 t16,0 t16,0 t16,0" stroke-width="2"/>
+        <g class="crea">
+          <ellipse cx="150" cy="52" rx="13" ry="3" stroke-width="1" opacity=".6"/>
+          <ellipse cx="150" cy="52" rx="24" ry="5.5" stroke-width="1" opacity=".4"/>
+          <circle cx="143" cy="44" r="1.6" stroke-width="1" opacity=".7"/>
+          <circle cx="156" cy="40" r="2.1" stroke-width="1" opacity=".6"/>
+          <path d="M64,86 C84,72 132,70 168,80 C196,88 206,104 198,116 C170,130 96,130 72,116 C56,106 52,94 64,86 Z" fill="currentColor" stroke="none" opacity=".22"/>
+          <path d="M96,84 q-12,-14 -4,-26" stroke-width="1.6" opacity=".35"/>
+          <circle cx="150" cy="96" r="3.2" fill="#c1452b" stroke="none" opacity=".9"/>
+        </g>
+        <path d="M64,46 q3,-5 8,-3 m-4,-2 l-2,5" stroke-width="1.6"/>
+      </svg><span class="veil">？</span></figure>
+      <div class="lv"><div class="fig"><span>FIG. ??? — 資料加密</span><span>CLASSIFIED</span></div>
+        <h3>？？？</h3>
+        <div class="scanline-bar"></div>
+        <p><span class="redact" style="width:86%"></span><span class="redact" style="width:74%"></span><span class="redact" style="width:52%"></span></p>
+        <p class="hint">// 檔案已加密 — 點擊解密 DECLASSIFY</p></div>
+      <div class="tv"><div class="fig"><span>FIG. T-7 — 永遠別下水</span><span>FIELD SKETCH</span></div>
+        <h3>七層之物 The Thing on Level 7</h3>
+        <p>棲息在 Level 7 深水中的龐然之物。沒有人完整見過它——只見過漣漪、上升的氣泡，以及再也沒浮上來的同伴。有一派研究者認為：它不在水裡，它就是那片水。</p>
+        <div class="tag-row"><span class="tag warn">致命</span><span class="tag neutral">未確認形體</span></div></div></article>
   </div>
   <div class="note safe reveal" style="margin-top:2.5rem">
     <b>生存提示：</b> 大多數實體都怕光與聲響的突變。隨身攜帶光源，保持冷靜，記住——<strong>恐慌比實體更致命</strong>。
@@ -1477,6 +1587,33 @@ body.noclip #app{animation:nc .55s steps(2) 2}
     ncPct.textContent=(p<=0?'SCROLL — ':'')+Math.round(p*100)+'% NO-CLIP';
     caps.forEach(function(c){var g=c.dataset.r.split(',');c.classList.toggle('on',p>=+g[0]&&p<=+g[1]);});
   }
+  /* 圖鑑加密檔案：點擊解密 + localStorage 永久記錄 */
+  var DEXKEY='br_unlocked';
+  var dexDone=[];try{dexDone=JSON.parse(localStorage.getItem(DEXKEY)||'[]')}catch(_){}
+  document.querySelectorAll('.card[data-file]').forEach(function(c){
+    if(dexDone.indexOf(c.dataset.file)>=0)c.classList.remove('locked');
+  });
+  function dexCount(){
+    [['view-levels','dexLevels'],['view-entities','dexEntities']].forEach(function(p){
+      var v=document.getElementById(p[0]),el=document.getElementById(p[1]);
+      if(!v||!el)return;
+      var all=v.querySelectorAll('.grid .card').length;
+      var locked=v.querySelectorAll('.grid .card.locked').length;
+      el.textContent='// 圖鑑進度 '+(all-locked)+' / '+all+(locked?' — 尚有 '+locked+' 份加密檔案，點擊卡片解密':' — 全數確認 ✔ 你是真正的檔案管理員');
+    });
+  }
+  document.addEventListener('click',function(e){
+    var c=e.target.closest('.card.locked[data-file]');if(!c)return;
+    c.classList.remove('locked');c.classList.add('unlock-flash');
+    if(dexDone.indexOf(c.dataset.file)<0){dexDone.push(c.dataset.file);
+      try{localStorage.setItem(DEXKEY,JSON.stringify(dexDone))}catch(_){}}
+    var db=c.querySelector('.danger-bar i');
+    if(db)setTimeout(function(){db.style.width=(+db.parentElement.dataset.level||0)+'%';},80);
+    showToast('// 檔案解密成功 — 住民權限已記錄',1900);
+    dexCount();
+  });
+  dexCount();
+
   /* 尋獲錄像：點擊才載入 YouTube 播放器 */
   var vp=document.getElementById('vhsPlay');
   if(vp){vp.addEventListener('click',function(){
