@@ -377,6 +377,38 @@ body.noclip #app{animation:nc .55s steps(2) 2}
   letter-spacing:.18em;background:rgba(21,19,10,.85);color:var(--cream);padding:.25rem .6rem}
 .card:hover .photo{border-color:rgba(255,246,194,.3)}
 
+/* 滾動驅動翻面（scroll-driven no-clip） */
+.scrolly{height:320vh;position:relative;padding:0}
+.scrolly .stage{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:1.5rem;overflow:hidden}
+.prog{position:relative;width:min(300px,60vw);height:5px;border:1px solid var(--line);background:rgba(33,29,12,.1)}
+.prog i{display:block;height:100%;width:0;background:var(--hazard)}
+.prog span{position:absolute;left:50%;transform:translateX(-50%);top:-26px;white-space:nowrap;
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;color:var(--ink-soft)}
+.scene{perspective:1400px;width:min(380px,76vw)}
+.flip{position:relative;width:100%;aspect-ratio:3/4;transform-style:preserve-3d;will-change:transform}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border:2px solid var(--ink);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.3rem;text-align:center;padding:1.6rem;
+  box-shadow:0 30px 60px -30px rgba(0,0,0,.55)}
+.face .f-ix{font-family:var(--mono);font-size:.66rem;letter-spacing:.26em}
+.face b{font-family:var(--disp);font-size:clamp(2.4rem,7vw,3.8rem);font-weight:700;line-height:1}
+.face .f-en{font-family:var(--mono);letter-spacing:.3em;font-size:.76rem}
+.face p{font-size:.9rem;line-height:1.75;margin:.8rem 0 0}
+.face.front{background:#f2eee2;color:#33312b}
+.face.front .f-ix{color:#999286}
+.face.front p{color:#6b675c}
+.face.back{transform:rotateY(180deg);color:var(--ink);
+  background:repeating-linear-gradient(90deg,rgba(0,0,0,.06) 0 2px,transparent 2px 44px),
+  linear-gradient(180deg,#d6c97c,#ad9f54)}
+.face.back .f-ix{color:var(--danger)}
+.face.back p{color:var(--ink-soft)}
+.cap-zone{position:relative;height:74px;width:100%}
+.cap{position:absolute;left:50%;top:0;transform:translateX(-50%) translateY(14px);width:max-content;max-width:88vw;
+  text-align:center;font-size:1.02rem;line-height:1.7;color:var(--ink-soft);opacity:0;
+  transition:opacity .35s,transform .35s;pointer-events:none}
+.cap b{color:var(--ink);font-family:var(--disp)}
+.cap.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
 /* 彩蛋：杏仁水可以偷喝 */
 .almond .bottle{cursor:pointer}
 .bottle.glug{animation:glug .5s ease}
@@ -516,6 +548,34 @@ body.noclip #app{animation:nc .55s steps(2) 2}
     <div class="plate wide" data-go="survival">
       <span class="ix">// 04</span><h3>生存指南</h3><span class="en">SURVIVAL MANUAL</span>
       <p>六條保命守則與杏仁水補給——掉進後室後，如何活著、甚至嘗試離開。</p><span class="go">▸ ENTER</span>
+    </div>
+  </div>
+</section>
+
+<!-- 滾動驅動：穿牆 NO-CLIP 翻面 -->
+<section class="scrolly" id="noclipScrolly">
+  <div class="stage">
+    <div class="prog"><i id="ncBar"></i><span id="ncPct">SCROLL — 0% NO-CLIP</span></div>
+    <div class="scene">
+      <div class="flip" id="flipPlate">
+        <div class="face front">
+          <span class="f-ix">// SIDE A</span>
+          <b>現實</b>
+          <span class="f-en">REALITY</span>
+          <p>一面普通的牆。<br>你每天經過它一千次，<br>從來沒有多看一眼。</p>
+        </div>
+        <div class="face back">
+          <span class="f-ix">// SIDE B</span>
+          <b>後室</b>
+          <span class="f-en">THE BACKROOMS</span>
+          <p>牆的另一邊。<br>發黃、嗡鳴、無盡。<br>它一直都在。</p>
+        </div>
+      </div>
+    </div>
+    <div class="cap-zone">
+      <div class="cap" data-r="0,0.3">繼續往下滑——<br><b>現實的牆比你想的薄。</b></div>
+      <div class="cap" data-r="0.35,0.65"><b>你正在穿過它。</b><br>NO-CLIPPING…</div>
+      <div class="cap" data-r="0.7,1"><b>歡迎來到另一側。</b><br>這裡的燈，永遠不會關。</div>
     </div>
   </div>
 </section>
@@ -1134,7 +1194,26 @@ body.noclip #app{animation:nc .55s steps(2) 2}
     console.log('%c> 提示：在頁面上慢慢輸入  n o c l i p','color:#2b7a69;font-size:12px');
   }catch(_){}
 
+  /* 滾動驅動翻面：滾動量 = no-clip 進度 */
+  var sc=document.getElementById('noclipScrolly'),flip=document.getElementById('flipPlate'),
+      ncBar=document.getElementById('ncBar'),ncPct=document.getElementById('ncPct'),
+      caps=sc?Array.prototype.slice.call(sc.querySelectorAll('.cap')):[];
+  function scrollyTick(){
+    if(!sc||!sc.offsetParent)return;
+    var r=sc.getBoundingClientRect();
+    var total=sc.offsetHeight-window.innerHeight;
+    var p=Math.min(Math.max(-r.top/(total||1),0),1);
+    var deg=p*180, tilt=Math.sin(p*Math.PI)*8, zoom=1+Math.sin(p*Math.PI)*.06;
+    flip.style.transform='rotateY('+deg.toFixed(2)+'deg) rotateX('+(-tilt).toFixed(2)+'deg) scale('+zoom.toFixed(3)+')';
+    ncBar.style.width=(p*100).toFixed(1)+'%';
+    ncPct.textContent=(p<=0?'SCROLL — ':'')+Math.round(p*100)+'% NO-CLIP';
+    caps.forEach(function(c){var g=c.dataset.r.split(',');c.classList.toggle('on',p>=+g[0]&&p<=+g[1]);});
+  }
+  window.addEventListener('scroll',function(){requestAnimationFrame(scrollyTick);},{passive:true});
+  window.addEventListener('resize',function(){requestAnimationFrame(scrollyTick);},{passive:true});
+
   activate(location.hash.replace('#','')||'home');
+  scrollyTick();
 })();
 </script>
 </body>
