@@ -75,7 +75,7 @@ body.lightsout .blackout{opacity:1}
    ============================================================ */
 .ticker{background:var(--ink);color:var(--cream);overflow:hidden;white-space:nowrap;
   font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;border-bottom:1px solid rgba(255,246,194,.15)}
-.ticker div{display:inline-block;padding:.4rem 0;animation:slide 26s linear infinite}
+.ticker div{display:inline-block;padding:.4rem 0;animation:slide 38s linear infinite}
 .ticker span{padding:0 1.4rem;opacity:.85}
 .ticker b{color:var(--hazard)}
 @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
@@ -119,7 +119,7 @@ body.lightsout .tool.torch{background:var(--cream);color:var(--ink)}
    基本排版
    ============================================================ */
 .wrap{max-width:1240px;margin:0 auto;padding:0 clamp(1rem,4vw,2.2rem)}
-section{padding:clamp(3rem,7vw,6rem) 0}
+section{padding:clamp(3.2rem,6vw,5.2rem) 0}
 .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:.28em;font-size:.72rem;color:var(--ink-soft);margin:0 0 .9rem}
 h1,h2,h3{font-family:var(--disp);line-height:1.02;margin:.2rem 0;font-weight:700}
 .title{font-size:clamp(1.9rem,4.6vw,3.2rem);font-weight:700;letter-spacing:-.01em}
@@ -129,8 +129,8 @@ p.lead{font-size:1.08rem;line-height:1.85;color:var(--ink-soft);max-width:64ch;f
 /* 區塊標題：大型索引 + 標題 */
 .sec-head{display:grid;grid-template-columns:auto 1fr;gap:clamp(1rem,3vw,2.4rem);align-items:start;
   margin-bottom:2.8rem;padding-bottom:1.6rem;border-bottom:2px solid var(--ink)}
-.sec-head .ix{font-family:var(--mono);font-weight:700;font-size:clamp(2.4rem,7vw,4.6rem);
-  line-height:.8;color:transparent;-webkit-text-stroke:2px var(--ink-soft)}
+.sec-head .ix{font-family:var(--mono);font-weight:700;font-size:clamp(1.9rem,4.6vw,3.2rem);
+  line-height:.8;color:transparent;-webkit-text-stroke:1.5px var(--ink-soft);opacity:.85}
 .sec-head .sub{color:var(--ink-soft);line-height:1.85;margin-top:.8rem}
 
 /* ============================================================
@@ -143,20 +143,22 @@ p.lead{font-size:1.08rem;line-height:1.85;color:var(--ink-soft);max-width:64ch;f
 @keyframes tubeflick{0%,95%,100%{opacity:.9}96%{opacity:.14}97%{opacity:.78}98%{opacity:.24}99%{opacity:.9}}
 .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.55fr .95fr;gap:0;
   border:2px solid var(--ink);background:rgba(255,250,222,.4)}
-.hero-main{padding:clamp(1.6rem,4vw,3rem);border-right:2px solid var(--ink)}
+.hero-main{padding:clamp(2rem,4.5vw,3.4rem);border-right:2px solid var(--ink);
+  display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:1.5rem}
 .kicker{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--mono);font-size:.72rem;
-  letter-spacing:.16em;background:var(--danger);color:#fff;padding:.35rem .85rem;margin-bottom:1.4rem}
+  letter-spacing:.16em;background:var(--danger);color:#fff;padding:.35rem .85rem;margin-bottom:0}
 .kicker::before{content:"●";color:#fff;animation:blink 1.2s steps(2) infinite}
-.hero h1{font-size:clamp(3.4rem,13vw,9rem);font-weight:700;letter-spacing:-.03em;line-height:.86;color:var(--ink)}
-.hero h1 .en{display:block;font-size:clamp(1rem,3.2vw,2rem);letter-spacing:.5em;color:transparent;
-  -webkit-text-stroke:1.2px var(--ink-soft);margin-top:.6rem;font-weight:500}
+.hero h1{font-size:clamp(3rem,11vw,7.6rem);font-weight:700;letter-spacing:-.02em;line-height:.9;color:var(--ink);margin:0}
+.hero h1 .en{display:block;font-size:clamp(.95rem,2.6vw,1.5rem);letter-spacing:.32em;color:transparent;
+  -webkit-text-stroke:1.2px var(--ink-soft);margin-top:.9rem;font-weight:500;white-space:nowrap}
+.parallax{will-change:transform;transition:transform .3s cubic-bezier(.2,.7,.3,1)}
 .glitch{position:relative;display:inline-block}
 .glitch::before,.glitch::after{content:attr(data-text);position:absolute;inset:0}
 .glitch::before{color:var(--danger);animation:gl1 3.2s infinite steps(2);clip-path:inset(0 0 55% 0)}
 .glitch::after{color:var(--safe);animation:gl2 2.6s infinite steps(2);clip-path:inset(55% 0 0 0)}
 @keyframes gl1{0%,90%,100%{transform:translate(0)}92%{transform:translate(-3px,-2px)}94%{transform:translate(2px,1px)}}
 @keyframes gl2{0%,90%,100%{transform:translate(0)}92%{transform:translate(3px,2px)}94%{transform:translate(-2px,-1px)}}
-.hero-main p.lead{margin-top:1.5rem}
+.hero-main p.lead{margin:0}
 /* 側欄檔案板塊 */
 .hero-side{background:var(--ink);color:var(--cream);padding:clamp(1.4rem,3vw,2.2rem);display:flex;flex-direction:column;gap:0}
 .hero-side .shead{font-family:var(--mono);font-size:.68rem;letter-spacing:.24em;color:var(--hazard);
@@ -177,8 +179,8 @@ p.lead{font-size:1.08rem;line-height:1.85;color:var(--ink-soft);max-width:64ch;f
 
 /* 跑馬燈斷層 */
 .marquee{border-block:2px solid var(--ink);background:var(--hazard);color:var(--ink);overflow:hidden;white-space:nowrap;margin:0}
-.marquee div{display:inline-block;padding:.7rem 0;font-family:var(--disp);font-weight:700;
-  letter-spacing:.06em;font-size:1.05rem;animation:slide 22s linear infinite}
+.marquee div{display:inline-block;padding:.55rem 0;font-family:var(--disp);font-weight:700;
+  letter-spacing:.14em;font-size:.92rem;animation:slide 30s linear infinite}
 .marquee span{padding:0 1.6rem}.marquee span::after{content:"◆";margin-left:1.6rem;opacity:.5}
 .marquee.alt{background:var(--ink);color:var(--cream)}
 .marquee.alt div{animation-direction:reverse;animation-duration:28s}
@@ -411,7 +413,7 @@ body.noclip #app{animation:nc .55s steps(2) 2}
   <div class="hero-grid">
     <div class="hero-main">
       <span class="kicker">NO-CLIP DETECTED · 無剪輯事件</span>
-      <h1><span class="glitch" data-text="後室">後室</span><span class="en">THE BACKROOMS</span></h1>
+      <h1 class="parallax"><span class="glitch" data-text="後室">後室</span><span class="en">THE BACKROOMS</span></h1>
       <p class="lead">如果你不小心「剪輯」出現實之外，就會掉進這片發黃的無盡房間。濕地毯、嗡嗡作響的日光燈、約六億平方公里的空房間——而我，是在這裡待了很久很久的<strong>資深住民</strong>。</p>
       <div class="btn-row">
         <a class="btn btn-primary" data-go="levels">進入層級圖鑑 <span>▸</span></a>
@@ -875,7 +877,8 @@ body.noclip #app{animation:nc .55s steps(2) 2}
     <div class="foot-cell">
       <div class="fbrand">◉ 後室檔案室</div>
       <p>由一位後室資深粉絲整理的閾限空間檔案室。純屬虛構創作，向 Backrooms 社群致敬。</p>
-      <p style="font-family:var(--mono);font-size:.72rem;color:#8f8552;margin-top:1rem">FAN-MADE ARCHIVE · NON-OFFICIAL</p>
+      <p style="font-family:var(--mono);font-size:.82rem;color:var(--cream);margin-top:1rem;letter-spacing:.12em">學號 513170184 · 孫嘉佑</p>
+      <p style="font-family:var(--mono);font-size:.72rem;color:#8f8552;margin-top:.3rem">FAN-MADE ARCHIVE · NON-OFFICIAL</p>
     </div>
     <div class="foot-cell">
       <h4>檔案目錄</h4>
@@ -893,7 +896,7 @@ body.noclip #app{animation:nc .55s steps(2) 2}
   </div>
   <div class="foot-bottom">
     <span>⚠ 若你正在閱讀這行字，代表你還沒被剪輯出去。保持清醒。</span>
-    <span>© 後室檔案室 · BACKROOMS ARCHIVE</span>
+    <span>© 後室檔案室 · 513170184 孫嘉佑</span>
   </div>
 </footer>
 </div><!-- /#app -->
@@ -931,7 +934,11 @@ body.noclip #app{animation:nc .55s steps(2) 2}
   var tx=window.innerWidth/2,ty=window.innerHeight/2,raf=false;
   window.addEventListener('mousemove',function(e){tx=e.clientX;ty=e.clientY;
     if(!raf){raf=true;requestAnimationFrame(function(){
-      root.style.setProperty('--mx',tx+'px');root.style.setProperty('--my',ty+'px');raf=false;});}});
+      root.style.setProperty('--mx',tx+'px');root.style.setProperty('--my',ty+'px');
+      var para=document.querySelector('.view.active .parallax');
+      if(para){var dx=tx/window.innerWidth-.5,dy=ty/window.innerHeight-.5;
+        para.style.transform='translate('+(dx*8).toFixed(1)+'px,'+(dy*5).toFixed(1)+'px)';}
+      raf=false;});}});
   document.getElementById('torchBtn').addEventListener('click',function(){
     var on=document.body.classList.toggle('lightsout');
     this.textContent=on?'● 開燈':'○ 關燈';});
