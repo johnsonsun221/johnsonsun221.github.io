@@ -412,6 +412,20 @@ body.noclip #app{animation:nc .55s steps(2) 2}
 .cap b{color:var(--ink);font-family:var(--disp)}
 .cap.on{opacity:1;transform:translateX(-50%) translateY(0)}
 
+/* BlockStudio 式滾動縮放字（scroll-scaling type） */
+.zoomy{height:240vh;position:relative;padding:0}
+.zoomy .stage{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;overflow:hidden}
+.zword{font-family:var(--disp);font-weight:700;letter-spacing:-.02em;line-height:1;color:var(--ink);
+  font-size:clamp(2.6rem,9vw,6rem);white-space:nowrap;text-align:center;
+  transform-origin:50% 50%;will-change:transform}
+.zword small{display:block;font-family:var(--mono);font-size:.16em;letter-spacing:.5em;
+  color:var(--ink-soft);font-weight:400;margin-top:.4em}
+.zsub{position:absolute;bottom:13%;left:50%;transform:translateX(-50%);white-space:nowrap;
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.26em;color:var(--ink-soft);
+  opacity:0;transition:opacity .5s}
+.zsub.on{opacity:1}
+
 /* 彩蛋：杏仁水可以偷喝 */
 .almond .bottle{cursor:pointer}
 .bottle.glug{animation:glug .5s ease}
@@ -591,6 +605,14 @@ body.noclip #app{animation:nc .55s steps(2) 2}
       <h2 class="title" style="font-size:1.7rem">先喝口杏仁水，再開始探索</h2>
       <p class="lead">頂部的 <strong>About</strong> 選單裡，收著我新增的研究頁面：關於後室、生存指南、資深粉絲認證。提示：按 <b style="font-family:var(--mono);color:var(--hazard)">[N]</b> 試試 no-clip——如果你知道完整的穿牆咒語，不妨直接打出來。</p>
     </div>
+  </div>
+</section>
+
+<!-- BlockStudio 式滾動縮放：房間正在擴張 -->
+<section class="zoomy" id="zoomy">
+  <div class="stage">
+    <div class="zword" id="zWord">後室<small>BACKROOMS · 600,000,000 KM²</small></div>
+    <div class="zsub" id="zSub">SCROLL — 房間正在擴張 · THE ROOM IS EXPANDING</div>
   </div>
 </section>
 </div>
@@ -862,6 +884,27 @@ body.noclip #app{animation:nc .55s steps(2) 2}
     <b>免責聲明：</b> 後室是虛構的網路創作 (creepypasta / collaborative fiction)。本站為粉絲自製的致敬作品，不代表任何官方，也請放心——你並不會真的掉進去……大概吧。
   </div>
 </section>
+
+<section class="wrap" style="padding-top:0">
+  <div class="sec-head reveal"><span class="ix">⌬</span>
+    <div><p class="eyebrow">// ANALYSIS — 深度分析</p><h2 class="title">為什麼我們害怕空房間 <em>Deep Dive</em></h2>
+    <p class="sub">身為資深粉絲，我不只收集設定——我想搞懂它為什麼有效。以下是我多年觀察後室現象整理出的五個分析切角。</p></div>
+  </div>
+  <div class="grid">
+    <article class="card reveal"><div class="num"><span>ANALYSIS 01</span><span>心理</span></div><h3>凱諾普西亞 Kenopsia</h3>
+      <p>「本該擠滿人的地方，空無一人」的詭異氛圍，有個專門的造詞：kenopsia。商場、教室、辦公室在我們的記憶裡永遠伴隨人聲；把人抽走，大腦的預測模型就會失靈——熟悉感瞬間翻轉成警報。後室做的事，是把這種失靈拉到無限大：六億平方公里的「應該有人」。</p></article>
+    <article class="card reveal"><div class="num"><span>ANALYSIS 02</span><span>敘事</span></div><h3>恐怖的低成本革命</h3>
+      <p>傳統恐怖片靠怪物特寫與 jump scare 堆疊刺激；後室幾乎反著做——最可怕的時刻，畫面裡什麼都沒有，只有黃牆與嗡鳴。實體出場率被刻意壓到極低，恐怖的主體從「看見什麼」轉移到「預期會看見什麼」。這是恐怖敘事的範式轉移：氛圍即怪物。</p></article>
+    <article class="card reveal"><div class="num"><span>ANALYSIS 03</span><span>認知</span></div><h3>非歐拓樸與認知地圖</h3>
+      <p>人類導航依賴「空間一致性」：走過的走廊應該還在原處。後室的走廊會重複、會改變、門不守恆——這正是夢境與迷路噩夢的底層機制。所以每個人第一次看到後室都「似曾相識」：你不是沒去過，你在夢裡迷路過。</p></article>
+    <article class="card reveal"><div class="num"><span>ANALYSIS 04</span><span>傳播</span></div><h3>模因式協作創作</h3>
+      <p>後室沒有版權方、沒有正典委員會。一張圖 → 一段貼文 → 上千個層級。它的 wiki 借用了 SCP 基金會的「偽官方文件體」：用冷靜的分級、編號、生存須知去描述瘋狂的內容——格式本身就是恐怖的放大器。可信的口吻，比血腥的描寫更讓人發毛。</p></article>
+    <article class="card reveal"><div class="num"><span>ANALYSIS 05</span><span>影像</span></div><h3>Kane Pixels 的可信度工程</h3>
+      <p>《The Backrooms (Found Footage)》用 1990s VHS 質感包裹現代 3D 動畫：低解析度與雜訊一邊遮蔽 CG 的破綻，一邊觸發「舊錄影帶＝真實檔案」的條件反射。手持鏡頭的喘息節奏取代配樂——這是一套精準的可信度工程，也是它能假亂真爆紅的原因。</p></article>
+    <article class="card reveal"><div class="num"><span>CONCLUSION</span><span>∎</span></div><h3>我的結論</h3>
+      <p>後室之所以迷人，是因為它是一面「集體寫成的鏡子」：我們真正害怕的不是怪物，而是現代生活本身的空轉——無盡的辦公室、重複的走廊、永遠亮著卻照不暖人的燈。每個寫層級的人，都在描述自己的某一天。</p></article>
+  </div>
+</section>
 </div>
 
 <!-- ============================================================ 04 SURVIVAL ============================================================ -->
@@ -976,13 +1019,30 @@ body.noclip #app{animation:nc .55s steps(2) 2}
     <div><p class="eyebrow">// COLLECTION — 我的收藏</p><h2 class="title">資深粉絲的櫃子 <em>Collection</em></h2></div>
   </div>
   <div class="grid">
-    <article class="card reveal"><div class="num"><span>FAV LEVEL</span><span>♥</span></div><h3>最愛層級：Poolrooms</h3>
+    <article class="card reveal"><div class="num"><span>FAV LEVEL</span><span>♥</span></div>
+      <figure class="photo"><img src="https://static.wikia.nocookie.net/backrooms/images/8/8d/PoolroomsThemeBg.jpg/revision/latest/scale-to-width-down/900?cb=20230727191708" alt="我的最愛層級 Poolrooms：寧靜溫水的泳池迷宮" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('figure').style.display='none'"><span class="ph-tag">MY COLLECTION · CC BY-SA</span></figure>
+      <h3>最愛層級：Poolrooms</h3>
       <p>Level 37。在無盡恐怖裡，那片寧靜溫水的泳池是我心中的避難所。閾限美學的極致。</p>
       <div class="tag-row"><span class="tag safe">心頭好</span></div></article>
-    <article class="card reveal"><div class="num"><span>FAV ENTITY</span><span>♥</span></div><h3>最愛實體：史密斯先生</h3>
+    <article class="card reveal"><div class="num"><span>FAV ENTITY</span><span>♥</span></div>
+      <figure class="specimen"><svg viewBox="0 0 240 110" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="史密斯先生：我的收藏速寫">
+        <path d="M28,100 L214,100" stroke-width="1" stroke-dasharray="2 6" opacity=".6"/>
+        <g class="crea">
+          <circle cx="100" cy="46" r="20" stroke-width="2.4"/>
+          <path d="M90,40 q4,-5 8,0 M110,40 q4,-5 8,0" stroke-width="2"/>
+          <path d="M88,50 q12,12 24,0" stroke="#2b7a69" stroke-width="2.6"/>
+          <path d="M100,66 L100,88 M100,72 L82,82 M100,72 L122,76 M100,88 L90,100 M100,88 L110,100" stroke-width="2.2"/>
+        </g>
+        <rect x="138" y="62" width="13" height="28" rx="4" stroke-width="2" fill="rgba(255,246,194,.45)"/>
+        <rect x="141" y="56" width="7" height="6" fill="currentColor" stroke="none"/>
+        <path d="M152,58 q6,-4 6,-10 l-3,3 m3,-3 l3,3" stroke="#2b7a69" stroke-width="1.2" stroke-dasharray="3 3"/>
+      </svg></figure><div class="fig"><span>私人收藏 — 親繪速寫</span><span>FROM MY NOTEBOOK</span></div>
+      <h3>最愛實體：史密斯先生</h3>
       <p>少數的友善實體。在一片惡意中，它願意與你交易、與你說話。後室裡的人性微光。</p>
       <div class="tag-row"><span class="tag safe">嘴硬但喜歡</span></div></article>
-    <article class="card reveal"><div class="num"><span>GEAR</span><span>⚙</span></div><h3>隨身裝備</h3>
+    <article class="card reveal"><div class="num"><span>GEAR</span><span>⚙</span></div>
+      <figure class="photo"><img src="https://static.wikia.nocookie.net/backrooms/images/5/5a/Almond-water-glass-bottles-new-look.jpg/revision/latest/scale-to-width-down/900" alt="隨身裝備：玻璃瓶裝杏仁水補給" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('figure').style.display='none'"><span class="ph-tag">MY COLLECTION · CC BY-SA</span></figure>
+      <h3>隨身裝備</h3>
       <p>手電筒、粉筆、三瓶杏仁水、一本寫滿地圖的筆記本——以及永遠不直視黑暗的紀律。</p>
       <div class="tag-row"><span class="tag neutral">標準配置</span></div></article>
   </div>
@@ -1212,11 +1272,25 @@ body.noclip #app{animation:nc .55s steps(2) 2}
     ncPct.textContent=(p<=0?'SCROLL — ':'')+Math.round(p*100)+'% NO-CLIP';
     caps.forEach(function(c){var g=c.dataset.r.split(',');c.classList.toggle('on',p>=+g[0]&&p<=+g[1]);});
   }
-  window.addEventListener('scroll',function(){requestAnimationFrame(scrollyTick);},{passive:true});
-  window.addEventListener('resize',function(){requestAnimationFrame(scrollyTick);},{passive:true});
+  /* 滾動縮放字：滾動量 = 房間擴張倍率 */
+  var zo=document.getElementById('zoomy'),zw=document.getElementById('zWord'),zs=document.getElementById('zSub');
+  var prm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function zoomyTick(){
+    if(!zo||!zo.offsetParent)return;
+    if(prm){zw.style.transform='scale(1)';return;}
+    var r=zo.getBoundingClientRect();
+    var total=zo.offsetHeight-window.innerHeight;
+    var p=Math.min(Math.max(-r.top/(total||1),0),1);
+    var e=p*p*(3-2*p);
+    zw.style.transform='scale('+(0.3+e*5.7).toFixed(3)+')';
+    zs.classList.toggle('on',p<0.18);
+  }
+  function ticks(){scrollyTick();zoomyTick();}
+  window.addEventListener('scroll',function(){requestAnimationFrame(ticks);},{passive:true});
+  window.addEventListener('resize',function(){requestAnimationFrame(ticks);},{passive:true});
 
   activate(location.hash.replace('#','')||'home');
-  scrollyTick();
+  ticks();
 })();
 </script>
 </body>
