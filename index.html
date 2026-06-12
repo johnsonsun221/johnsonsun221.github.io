@@ -366,6 +366,17 @@ body.noclip #app{animation:nc .55s steps(2) 2}
   font-family:var(--mono);letter-spacing:.3em;padding:.7rem 1.6rem;transform:rotate(-4deg);
   margin:1.4rem 0;font-weight:700}
 
+/* 層級檔案照片（來源：Backrooms Fandom Wiki · CC BY-SA） */
+.photo{position:relative;margin:1rem 0 0;border:1px solid var(--line);overflow:hidden;background:#0c0a04}
+.photo img{display:block;width:100%;height:172px;object-fit:cover;
+  filter:sepia(.28) contrast(1.06) saturate(.85);transition:filter .4s,transform .5s}
+.card:hover .photo img{filter:sepia(.05) contrast(1.02) saturate(1);transform:scale(1.045)}
+.photo::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.16) 0 1px,transparent 1px 3px);mix-blend-mode:multiply}
+.photo .ph-tag{position:absolute;left:0;bottom:0;z-index:2;font-family:var(--mono);font-size:.58rem;
+  letter-spacing:.18em;background:rgba(21,19,10,.85);color:var(--cream);padding:.25rem .6rem}
+.card:hover .photo{border-color:rgba(255,246,194,.3)}
+
 /* 彩蛋：杏仁水可以偷喝 */
 .almond .bottle{cursor:pointer}
 .bottle.glug{animation:glug .5s ease}
@@ -529,41 +540,58 @@ body.noclip #app{animation:nc .55s steps(2) 2}
     <p class="sub">後室由無數「層級」組成，每一層都有自己的物理法則、危險度與居民。以下是我親自踏查、整理出的經典層級檔案。危險條越紅，越別久留。</p></div>
   </div>
   <div class="grid">
-    <article class="card reveal"><div class="num"><span>LEVEL 0</span><span>★</span></div><h3>黃室 The Lobby</h3>
+    <article class="card reveal"><div class="num"><span>LEVEL 0</span><span>★</span></div>
+      <figure class="photo"><img src="https://static.wikia.nocookie.net/backrooms/images/0/05/Thebackrooms.jpg/revision/latest/scale-to-width-down/900?cb=20230105020740" alt="Level 0 黃室：發黃壁紙與日光燈的無盡辦公空間（後室起源照片）" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('figure').style.display='none'"><span class="ph-tag">ARCHIVE PHOTO · CC BY-SA</span></figure>
+      <h3>黃室 The Lobby</h3>
       <div class="danger-bar" data-level="20"><i></i></div>
       <p>無盡的單色辦公空間，潮濕地毯與發黃壁紙。日光燈持續嗡鳴。新住民最常落腳之地。</p>
       <div class="tag-row"><span class="tag safe">危險度 1/5</span><span class="tag neutral">有杏仁水</span></div></article>
-    <article class="card reveal"><div class="num"><span>LEVEL 1</span><span>★★</span></div><h3>習慣之地 Habitable Zone</h3>
+    <article class="card reveal"><div class="num"><span>LEVEL 1</span><span>★★</span></div>
+      <figure class="photo"><img src="https://static.wikia.nocookie.net/backrooms/images/6/6e/Level_1_Rewrite.jpg/revision/latest/scale-to-width-down/900?cb=20240224130148" alt="Level 1 習慣之地：昏暗的倉庫與停車場結構" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('figure').style.display='none'"><span class="ph-tag">ARCHIVE PHOTO · CC BY-SA</span></figure>
+      <h3>習慣之地 Habitable Zone</h3>
       <div class="danger-bar" data-level="40"><i></i></div>
       <p>昏暗的倉庫與停車場結構，偶爾有實體徘徊。比黃室更大、更陰冷，可作為臨時據點。</p>
       <div class="tag-row"><span class="tag warn">危險度 2/5</span><span class="tag neutral">少量實體</span></div></article>
-    <article class="card reveal"><div class="num"><span>LEVEL 2</span><span>★★★</span></div><h3>面向後方 Pipe Dreams</h3>
+    <article class="card reveal"><div class="num"><span>LEVEL 2</span><span>★★★</span></div>
+      <figure class="photo"><img src="https://static.wikia.nocookie.net/backrooms/images/2/21/Pipeline1.jpg/revision/latest/scale-to-width-down/900?cb=20240419154518" alt="Level 2 面向後方：布滿滾燙管線的狹長維修隧道" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('figure').style.display='none'"><span class="ph-tag">ARCHIVE PHOTO · CC BY-SA</span></figure>
+      <h3>面向後方 Pipe Dreams</h3>
       <div class="danger-bar" data-level="58"><i></i></div>
       <p>狹長的維修隧道，牆面布滿滾燙管線。空間封閉、易迷路，且常有東西在管線後窺視。</p>
       <div class="tag-row"><span class="tag warn">危險度 3/5</span><span class="tag warn">高溫</span></div></article>
-    <article class="card reveal"><div class="num"><span>LEVEL !</span><span>☠</span></div><h3>奔跑禁區 Run For Your Life</h3>
+    <article class="card reveal"><div class="num"><span>LEVEL !</span><span>☠</span></div>
+      <figure class="photo"><img src="https://static.wikia.nocookie.net/backrooms/images/5/5b/Fire%F0%9F%94%A5%F0%9F%94%A5%F0%9F%94%A5I.jpeg/revision/latest/scale-to-width-down/900?cb=20250215035609" alt="Level ! 奔跑禁區：紅光警報下的長廊" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('figure').style.display='none'"><span class="ph-tag">ARCHIVE PHOTO · CC BY-SA</span></figure>
+      <h3>奔跑禁區 Run For Your Life</h3>
       <div class="danger-bar" data-level="85"><i></i></div>
       <p>外觀類似 Level 1，但燈光轉紅時——奔跑。停下就是死亡。極度危險的高警戒層級。</p>
       <div class="tag-row"><span class="tag warn">危險度 5/5</span><span class="tag warn">致命</span></div></article>
-    <article class="card reveal"><div class="num"><span>LEVEL FUN =)</span><span>★★★★</span></div><h3>歡樂層 Level Fun</h3>
+    <article class="card reveal"><div class="num"><span>LEVEL FUN =)</span><span>★★★★</span></div>
+      <figure class="photo"><img src="https://static.wikia.nocookie.net/backrooms/images/c/c6/LevelFun1.png/revision/latest/scale-to-width-down/900?cb=20241008213918" alt="Level Fun：永不結束的生日派對場地" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('figure').style.display='none'"><span class="ph-tag">ARCHIVE PHOTO · CC BY-SA</span></figure>
+      <h3>歡樂層 Level Fun</h3>
       <div class="danger-bar" data-level="78"><i></i></div>
       <p>永不結束的生日派對。糖果色牆面、氣球與蛋糕，看似歡樂，卻被「派對客」嚴密控制。微笑是強制的。</p>
       <div class="tag-row"><span class="tag warn">危險度 4/5</span><span class="tag warn">派對客</span></div></article>
-    <article class="card reveal"><div class="num"><span>LEVEL 11</span><span>★★</span></div><h3>無盡都市 The Endless City</h3>
+    <article class="card reveal"><div class="num"><span>LEVEL 11</span><span>★★</span></div>
+      <figure class="photo"><img src="https://static.wikia.nocookie.net/backrooms/images/6/6e/The_City_Class_Header.jpeg/revision/latest/scale-to-width-down/900?cb=20230129005151" alt="Level 11 無盡都市：永恆白晝的空蕩城市" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('figure').style.display='none'"><span class="ph-tag">ARCHIVE PHOTO · CC BY-SA</span></figure>
+      <h3>無盡都市 The Endless City</h3>
       <div class="danger-bar" data-level="35"><i></i></div>
       <p>一座永恆白晝的城市，有道路、商店與長椅。相對安全，是住民社群最常聚集之處。</p>
       <div class="tag-row"><span class="tag safe">危險度 2/5</span><span class="tag safe">有聚落</span></div></article>
-    <article class="card reveal"><div class="num"><span>LEVEL 37</span><span>★</span></div><h3>汪洋之間 The Poolrooms</h3>
+    <article class="card reveal"><div class="num"><span>LEVEL 37</span><span>★</span></div>
+      <figure class="photo"><img src="https://static.wikia.nocookie.net/backrooms/images/8/8d/PoolroomsThemeBg.jpg/revision/latest/scale-to-width-down/900?cb=20230727191708" alt="Level 37 汪洋之間：明亮潔淨的溫水泳池迷宮" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('figure').style.display='none'"><span class="ph-tag">ARCHIVE PHOTO · CC BY-SA</span></figure>
+      <h3>汪洋之間 The Poolrooms</h3>
       <div class="danger-bar" data-level="22"><i></i></div>
       <p>明亮、潔淨、充滿溫水的泳池迷宮。寧靜得近乎神聖，是後室中少見的療癒之地。</p>
       <div class="tag-row"><span class="tag safe">危險度 1/5</span><span class="tag safe">療癒</span></div></article>
-    <article class="card reveal"><div class="num"><span>THE END</span><span>?</span></div><h3>盡頭 The End</h3>
+    <article class="card reveal"><div class="num"><span>THE END</span><span>?</span></div>
+      <figure class="photo"><img src="https://static.wikia.nocookie.net/backrooms/images/3/36/Theendimage.png/revision/latest/scale-to-width-down/900?cb=20230404081656" alt="The End 盡頭：傳說中通往現實的最終層級" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('figure').style.display='none'"><span class="ph-tag">ARCHIVE PHOTO · CC BY-SA</span></figure>
+      <h3>盡頭 The End</h3>
       <div class="danger-bar" data-level="10"><i></i></div>
       <p>傳說中的最終層級。穿過那扇門，據說就能回到現實——但沒有人能證實，因為回去的人，再也沒回來說過。</p>
       <div class="tag-row"><span class="tag neutral">未知</span><span class="tag safe">傳說出口</span></div></article>
   </div>
   <div class="note reveal" style="margin-top:2.5rem">
     <b>檔案管理員筆記：</b> 層級編號並不代表危險度高低，也不代表抵達順序。後室的拓樸是非歐幾里得的——你可能在黃室走一道門，就直接掉進 Level !。永遠帶著杏仁水。
+    <br><span style="font-family:var(--mono);font-size:.74rem;opacity:.75">檔案照片來源：<a href="https://backrooms.fandom.com/" target="_blank" rel="noopener" style="color:inherit">Backrooms Wiki @ Fandom</a> · CC BY-SA 授權使用</span>
   </div>
 </section>
 </div>
@@ -927,6 +955,7 @@ body.noclip #app{animation:nc .55s steps(2) 2}
       <p>由一位後室資深粉絲整理的閾限空間檔案室。純屬虛構創作，向 Backrooms 社群致敬。</p>
       <p style="font-family:var(--mono);font-size:.82rem;color:var(--cream);margin-top:1rem;letter-spacing:.12em">學號 513170184 · 孫嘉佑</p>
       <p style="font-family:var(--mono);font-size:.72rem;color:#8f8552;margin-top:.3rem">FAN-MADE ARCHIVE · NON-OFFICIAL</p>
+      <p style="font-family:var(--mono);font-size:.68rem;color:#8f8552;margin-top:.3rem">層級照片：<a href="https://backrooms.fandom.com/" target="_blank" rel="noopener" style="color:#a99e63;border-bottom-color:#8f8552">Backrooms Wiki</a> · CC BY-SA</p>
     </div>
     <div class="foot-cell">
       <h4>檔案目錄</h4>
