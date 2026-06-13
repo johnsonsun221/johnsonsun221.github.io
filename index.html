@@ -495,6 +495,17 @@ body.noclip #app{animation:nc .55s steps(2) 2}
 .vhs-play:hover .vhs-btn{background:var(--hazard);border-color:var(--hazard);box-shadow:0 0 44px rgba(232,115,31,.6)}
 .vhs-btn::after{content:"";margin-left:5px;border-style:solid;
   border-width:14px 0 14px 24px;border-color:transparent transparent transparent #fffbe0}
+/* 尋獲錄像輪播控制列 */
+.vhs-bar{display:flex;align-items:center;justify-content:space-between;gap:.6rem;flex-wrap:wrap;
+  border:2px solid var(--ink);border-top:0;background:rgba(255,250,222,.4);padding:.5rem .6rem}
+.vhs-nav{border:1px solid var(--ink);background:var(--ink);color:var(--cream);font-family:var(--mono);
+  font-size:.72rem;letter-spacing:.06em;padding:.5rem .8rem;cursor:pointer;white-space:nowrap;flex:0 0 auto}
+.vhs-nav:hover{background:var(--hazard);border-color:var(--hazard);color:#fff}
+.vhs-dots{display:flex;gap:.4rem;flex:1 1 auto;justify-content:center;flex-wrap:wrap}
+.vhs-dot{border:1px solid var(--line);background:transparent;color:var(--ink-soft);font-family:var(--mono);
+  font-size:.66rem;letter-spacing:.05em;padding:.34rem .6rem;cursor:pointer;transition:.16s}
+.vhs-dot:hover{border-color:var(--ink);color:var(--ink)}
+.vhs-dot.on{background:var(--hazard);color:#fff;border-color:var(--hazard)}
 
 /* 事件倒數：斷層之夜 */
 .link-event .ix{color:var(--danger);animation:blink 1.2s steps(2) infinite}
@@ -886,20 +897,25 @@ body.space-fold .corridor-depth{animation:spacepull .9s cubic-bezier(.2,.7,.2,1)
 <section class="wrap" style="padding-top:0">
   <div class="sec-head reveal"><span class="ix">▶</span>
     <div><p class="eyebrow">// FOOTAGE — 影像證據</p><h2 class="title">尋獲錄像 <em>Found Footage</em></h2>
-    <p class="sub">2022 年 1 月，創作者 Kane Pixels 上傳了這段「1996 年尋獲」的錄像——九分鐘、無配樂、一鏡到底的墜落。它讓後室從文字迷因變成全網現象。按下播放，自行判斷真偽。</p></div>
+    <p class="sub">從 2022 年那段「1996 年尋獲」的原始錄像，到 2026 年躍上大銀幕的 A24 電影——這是後室影像的證物櫃。用下方「上一卷／下一卷」切換，按下播放，自行判斷真偽。</p></div>
   </div>
-  <figure class="vhs reveal">
+  <figure class="vhs reveal" id="vhsCarousel">
     <div class="vhs-frame" id="vhsFrame">
-      <button class="vhs-play" id="vhsPlay" aria-label="播放《The Backrooms (Found Footage)》">
-        <img src="https://i.ytimg.com/vi/H4dGpz6cnHo/maxresdefault.jpg" alt="The Backrooms (Found Footage) 預告片畫面：發黃的無盡房間" loading="lazy">
+      <button class="vhs-play" id="vhsPlay" type="button" aria-label="播放尋獲錄像">
+        <img id="vhsThumb" src="https://i.ytimg.com/vi/H4dGpz6cnHo/maxresdefault.jpg" alt="尋獲錄像畫面：發黃的無盡房間" loading="lazy" referrerpolicy="no-referrer">
         <span class="vhs-osd vhs-rec"><i>●</i> REC</span>
         <span class="vhs-osd vhs-tape">SP&nbsp;&nbsp;VHS</span>
-        <span class="vhs-osd vhs-id">EVIDENCE 001 — RECOVERED 1996</span>
-        <span class="vhs-osd vhs-time">PLAY ▶ 0:00:00</span>
+        <span class="vhs-osd vhs-id" id="vhsId">EVIDENCE 001 · RECOVERED 1996</span>
+        <span class="vhs-osd vhs-time">PLAY ▶</span>
         <span class="vhs-btn"></span>
       </button>
     </div>
-    <div class="fig" style="margin-bottom:0"><span>EVIDENCE 001 — Kane Pixels《The Backrooms (Found Footage)》</span><span>YOUTUBE · 2022</span></div>
+    <div class="fig" id="vhsCap" style="margin-bottom:0"><span>EVIDENCE 001 — Kane Pixels《The Backrooms (Found Footage)》</span><span>YOUTUBE · 2022</span></div>
+    <div class="vhs-bar">
+      <button class="vhs-nav" id="vhsPrev" type="button" aria-label="上一卷錄像">‹ 上一卷</button>
+      <div class="vhs-dots" id="vhsDots"></div>
+      <button class="vhs-nav" id="vhsNext" type="button" aria-label="下一卷錄像">下一卷 ›</button>
+    </div>
   </figure>
 </section>
 
@@ -2392,19 +2408,51 @@ body.space-fold .corridor-depth{animation:spacepull .9s cubic-bezier(.2,.7,.2,1)
     tick();setInterval(tick,1000);
   })();
 
-  /* 尋獲錄像：點擊才載入 YouTube 播放器 */
-  var vp=document.getElementById('vhsPlay');
-  if(vp){vp.addEventListener('click',function(){
-    var f=document.createElement('iframe');
-    f.src='https://www.youtube-nocookie.com/embed/H4dGpz6cnHo?autoplay=1&rel=0';
-    f.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-    f.allowFullscreen=true;
-    f.title='The Backrooms (Found Footage) — Kane Pixels';
-    document.getElementById('vhsFrame').appendChild(f);
-    vp.remove();
-    adjustEntity(5);
-    showToast('// 播放中 — 注意身後',1800);
-  });}
+  /* 尋獲錄像輪播：多卷錄像，點擊才載入播放器 */
+  (function vhsCarousel(){
+    var frame=document.getElementById('vhsFrame');if(!frame)return;
+    var capEl=document.getElementById('vhsCap'),dotsEl=document.getElementById('vhsDots');
+    var vids=[
+      {id:'H4dGpz6cnHo',ev:'EVIDENCE 001',rec:'RECOVERED 1996',title:'Kane Pixels《The Backrooms (Found Footage)》',src:'YOUTUBE · 2022',thumb:'maxresdefault'},
+      {id:'acdYs9tPLko',ev:'EVIDENCE 002',rec:'RECOVERED 2024',title:'Kane Pixels《Backrooms — Found Footage #3》',src:'YOUTUBE · 2024',thumb:'hqdefault'},
+      {id:'yXIq26cfotY',ev:'EVIDENCE 003',rec:'TRANSMISSION 2026',title:'BACKROOMS 電影 前導預告 Teaser',src:'A24 FILM · 2026',thumb:'maxresdefault'},
+      {id:'0HjdiohVOik',ev:'EVIDENCE 004',rec:'NOW IN THEATERS',title:'Backrooms — A24 電影 正式預告',src:'A24 FILM · 2026 · 最新上映',thumb:'maxresdefault'}
+    ];
+    var idx=0,playing=false;
+    function thumb(v){return 'https://i.ytimg.com/vi/'+v.id+'/'+v.thumb+'.jpg';}
+    function renderFrame(){
+      var v=vids[idx];playing=false;
+      frame.innerHTML='<button class="vhs-play" id="vhsPlay" type="button" aria-label="播放：'+v.title+'">'+
+        '<img id="vhsThumb" src="'+thumb(v)+'" alt="'+v.title+' 畫面" loading="lazy" referrerpolicy="no-referrer" '+
+        "onerror=\"this.onerror=null;this.src='https://i.ytimg.com/vi/"+v.id+"/hqdefault.jpg'\">"+
+        '<span class="vhs-osd vhs-rec"><i>●</i> REC</span>'+
+        '<span class="vhs-osd vhs-tape">SP&nbsp;&nbsp;VHS</span>'+
+        '<span class="vhs-osd vhs-id">'+v.ev+' · '+v.rec+'</span>'+
+        '<span class="vhs-osd vhs-time">PLAY ▶</span><span class="vhs-btn"></span></button>';
+      if(capEl)capEl.innerHTML='<span>'+v.ev+' — '+v.title+'</span><span>'+v.src+'</span>';
+      if(dotsEl){var ds=dotsEl.children;for(var i=0;i<ds.length;i++)ds[i].classList.toggle('on',i===idx);}
+    }
+    function play(){
+      var v=vids[idx];var f=document.createElement('iframe');
+      f.src='https://www.youtube-nocookie.com/embed/'+v.id+'?autoplay=1&rel=0';
+      f.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      f.allowFullscreen=true;f.title=v.title;
+      frame.innerHTML='';frame.appendChild(f);playing=true;
+      adjustEntity(5);showToast('// 播放中：'+v.ev+' — 注意身後',1900);
+    }
+    function go(n){idx=(n+vids.length)%vids.length;renderFrame();}
+    if(dotsEl){
+      dotsEl.innerHTML=vids.map(function(v,i){
+        return '<button type="button" class="vhs-dot" data-i="'+i+'" title="'+v.title+'">'+v.ev.replace('EVIDENCE ','')+'</button>';
+      }).join('');
+      dotsEl.addEventListener('click',function(e){var b=e.target.closest('[data-i]');if(b)go(+b.dataset.i);});
+    }
+    var prev=document.getElementById('vhsPrev'),next=document.getElementById('vhsNext');
+    if(prev)prev.addEventListener('click',function(){go(idx-1);});
+    if(next)next.addEventListener('click',function(){go(idx+1);});
+    frame.addEventListener('click',function(e){if(e.target.closest('#vhsPlay')&&!playing)play();});
+    renderFrame();
+  })();
   (function installEvidenceTools(){
     var frame=document.getElementById('vhsFrame');
     if(!frame||document.getElementById('evidenceReadout'))return;
