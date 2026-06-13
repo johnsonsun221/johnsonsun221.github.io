@@ -2187,8 +2187,9 @@ body.space-fold .corridor-depth{animation:spacepull .9s cubic-bezier(.2,.7,.2,1)
     ncPct.textContent=(p<=0?'SCROLL — ':'')+Math.round(p*100)+'% NO-CLIP';
     caps.forEach(function(c){var g=c.dataset.r.split(',');c.classList.toggle('on',p>=+g[0]&&p<=+g[1]);});
   }
-  /* 圖鑑加密檔案：點擊解密，本次瀏覽有效 */
+  /* 圖鑑加密檔案：點擊解密，本次瀏覽有效（不持久化，重整即重置） */
   var dexDone=[];
+  try{localStorage.removeItem('br_unlocked')}catch(_){}  /* 清除舊版殘留，確保每次進站都是全新開始 */
   document.querySelectorAll('.card[data-file]').forEach(function(c){c.classList.add('locked');});
   function dexCount(){
     [['view-levels','dexLevels'],['view-entities','dexEntities']].forEach(function(p){
