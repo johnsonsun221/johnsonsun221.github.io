@@ -503,9 +503,10 @@ body.noclip #app{animation:nc .55s steps(2) 2}
   background:radial-gradient(circle 190px at var(--mx) var(--my),rgba(174,240,200,.16),transparent 72%)}
 body.lightsout .uvfield::before{opacity:1}
 .uv{position:absolute;font-family:var(--mono);white-space:nowrap;opacity:0;pointer-events:none;
-  padding:.14rem .34rem;border:1px solid rgba(174,240,200,.22);background:rgba(7,6,2,.12);
-  mix-blend-mode:screen;filter:blur(1.2px);
-  color:#aef0c8;text-shadow:0 0 10px rgba(140,255,190,.65),0 0 28px rgba(140,255,190,.3);
+  padding:.24rem .6rem;border-radius:6px;
+  background:rgba(5,8,4,.74);
+  box-shadow:0 0 0 3px rgba(5,8,4,.6),0 0 22px 12px rgba(5,8,4,.5);
+  color:#b9f5d2;text-shadow:0 0 5px rgba(140,255,190,.95),0 0 16px rgba(140,255,190,.4);
   font-size:clamp(.78rem,1.6vw,.95rem);letter-spacing:.18em;transform:rotate(var(--rot,-3deg));
   transition:opacity .12s linear,filter .12s linear}
 body:not(.lightsout) .uv{opacity:0!important}
