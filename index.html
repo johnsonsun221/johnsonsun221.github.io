@@ -596,8 +596,19 @@ body.battery-dead .blackout{background:radial-gradient(circle 92px at var(--mx) 
   font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;color:#8f8552}
 .trace-row i{width:8px;height:8px;border-radius:50%;background:#40381b;box-shadow:none}
 .trace-row.found{color:#cfc790}.trace-row.found i{background:var(--safe);box-shadow:0 0 12px rgba(43,122,105,.55)}
-.trace-status{margin-top:.55rem;font-size:.68rem;line-height:1.55;color:#a99e63}
-.trace-status b{color:var(--cream);font-weight:400}
+.trace-item{border-bottom:1px solid rgba(255,246,194,.08);padding:.42rem 0}
+.trace-item:last-of-type{border-bottom:0}
+.trace-top{display:flex;align-items:center;justify-content:space-between;gap:.55rem;
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.05em;color:#a99e63}
+.trace-top i{width:9px;height:9px;border-radius:50%;background:#40381b;flex:0 0 auto}
+.trace-item.found .trace-top{color:var(--cream)}
+.trace-item.found .trace-top i{background:var(--safe);box-shadow:0 0 12px rgba(43,122,105,.55)}
+.trace-how{font-size:.66rem;line-height:1.5;color:#8f8552;margin-top:.2rem}
+.trace-how b{color:var(--hazard);font-weight:400}
+.trace-item.found .trace-how{color:var(--safe)}
+.trace-status{margin-top:.7rem;padding-top:.6rem;border-top:1px dashed rgba(255,246,194,.18);
+  font-size:.68rem;line-height:1.6;color:#a99e63}
+.trace-status b{color:var(--hazard);font-weight:400}
 /* 左下角 M.E.G. 無線電機（醒目可點，導向值班台） */
 .radio-dock{position:fixed;left:1rem;bottom:1rem;z-index:70;width:min(360px,calc(100vw - 2rem));
   background:rgba(7,6,2,.95);border:2px solid var(--hazard);cursor:pointer;transition:transform .2s;
@@ -1853,6 +1864,14 @@ body.space-fold .corridor-depth{animation:spacepull .9s cubic-bezier(.2,.7,.2,1)
     radioIndex:0,driftDone:false,quizIndex:0,quizScore:0
   };
   var evidenceLabels={uv:'黑光字跡',radio:'無線電',decrypt:'加密檔案',evidence:'VHS 異常幀',quiz:'住民審核',noclip:'No-Clip'};
+  var evidenceHow={
+    uv:'點右上「<b>關燈</b>」，移動手電筒掃過頁面找出發光的字',
+    radio:'就在這台值班台，按下方「<b>掃描無線電</b>」',
+    decrypt:'到「<b>層級圖鑑</b>」或「<b>實體檔案</b>」頁，點開 🔒 加密卡片',
+    evidence:'回「<b>首頁</b>」，播放「尋獲錄像」那支 VHS 影片',
+    quiz:'就在這台值班台，按下方「<b>住民審核</b>」',
+    noclip:'在<b>任何頁面</b>，用鍵盤直接打出 noclip'
+  };
   var operatorTab=document.getElementById('operatorTab');
   var operatorPanel=document.getElementById('operatorPanel');
   var operatorClose=document.getElementById('operatorClose');
@@ -1895,7 +1914,7 @@ body.space-fold .corridor-depth{animation:spacepull .9s cubic-bezier(.2,.7,.2,1)
     if(entityOut)entityOut.textContent=runState.entity.toFixed(0)+'%';
     if(routeMap){
       var route=runState.route.slice(-7);
-      var header=runState.driftDone?'三角定位完成。地圖已承認自己不可信。':'證據鏈 '+evidenceCount+' / 3。先收集不同來源，再校準地圖。';
+      var header=runState.driftDone?'三角定位完成。地圖已承認自己不可信。':'證據鏈 '+evidenceCount+' / 3 種。集滿任意 3 種證據，就能按「校準地圖」拆穿它（取得方式見下方清單）。';
       routeMap.innerHTML='<b>'+header+'</b>'+(
         route.length?'<br>'+route.map(function(r,i){
           return '<b>'+(i?'↳ ':'ENTRY ')+'</b>'+r;
@@ -1905,8 +1924,10 @@ body.space-fold .corridor-depth{animation:spacepull .9s cubic-bezier(.2,.7,.2,1)
     if(traceBoard){
       traceBoard.innerHTML=Object.keys(evidenceLabels).map(function(k){
         var found=runState.evidence[k];
-        return '<div class="trace-row '+(found?'found':'')+'"><span>'+evidenceLabels[k]+'</span><i></i></div>';
-      }).join('')+'<div class="trace-status"><b>校準條件：</b>至少 3 種不同證據。頁面切換只記錄路線，不再觸發異常。</div>';
+        return '<div class="trace-item '+(found?'found':'')+'">'+
+          '<div class="trace-top"><span>'+evidenceLabels[k]+'</span><i></i></div>'+
+          '<div class="trace-how">'+(found?'✔ 已取得':'→ '+evidenceHow[k])+'</div></div>';
+      }).join('')+'<div class="trace-status"><b>這在幹嘛？</b>集滿任意 3 種證據後，按上方「校準地圖」，地圖就會露出一條隱藏的門位偏移（彩蛋）。光切換頁面不算證據。</div>';
     }
   }
   function markTask(id,msg){
@@ -1955,8 +1976,8 @@ body.space-fold .corridor-depth{animation:spacepull .9s cubic-bezier(.2,.7,.2,1)
   function calibrateMap(){
     var evidenceCount=Object.keys(runState.evidence).filter(function(k){return runState.evidence[k];}).length;
     if(evidenceCount<3){
-      setRadio('CH-11 校準失敗：至少需要三種不同證據。目前只有 '+evidenceCount+' 種。',true);
-      showToast('// MAP CALIBRATION FAILED — 證據不足 '+evidenceCount+'/3',1900);
+      setRadio('CH-11 校準失敗：需要 3 種不同證據，目前 '+evidenceCount+' 種。看值班台下方「證據清單」的取得方式（標了在哪一頁）。',true);
+      showToast('// 校準失敗 證據 '+evidenceCount+'/3 — 看值班台證據清單怎麼收集',2400);
       return;
     }
     if(runState.driftDone){
