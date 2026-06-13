@@ -585,6 +585,11 @@ body.battery-dead .blackout{background:radial-gradient(circle 92px at var(--mx) 
 .route-map{min-height:82px;border:1px solid rgba(255,246,194,.18);padding:.7rem;
   color:#a99e63;background:rgba(255,246,194,.04);font-size:.68rem;line-height:1.65}
 .route-map b{color:var(--cream);font-weight:400}
+.route-fake{display:inline-block;color:#ff7a68;text-shadow:0 0 8px rgba(193,69,43,.5);animation:routeglitch 2.6s steps(2) infinite}
+@keyframes routeglitch{0%,90%,100%{transform:translateX(0);opacity:1}93%{transform:translateX(-2px);opacity:.55}96%{transform:translateX(2px);opacity:1}}
+.route-go{border:1px solid #c1452b;background:rgba(193,69,43,.2);color:#ff9e8a;font-family:var(--mono);
+  font-size:.62rem;letter-spacing:.06em;padding:.16rem .5rem;margin-left:.45rem;cursor:pointer}
+.route-go:hover{background:#c1452b;color:#fff}
 .op-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(92px,1fr));gap:.55rem;margin-top:.8rem}
 .op-actions button,.evidence-tabs button,.quiz-actions button{border:1px solid rgba(255,246,194,.24);
   background:rgba(255,246,194,.06);color:var(--cream);font-family:var(--mono);font-size:.66rem;
@@ -1914,9 +1919,14 @@ body.space-fold .corridor-depth{animation:spacepull .9s cubic-bezier(.2,.7,.2,1)
     if(entityOut)entityOut.textContent=runState.entity.toFixed(0)+'%';
     if(routeMap){
       var route=runState.route.slice(-7);
-      var header=runState.driftDone?'三角定位完成。地圖已承認自己不可信。':'證據鏈 '+evidenceCount+' / 3 種。集滿任意 3 種證據，就能按「校準地圖」拆穿它（取得方式見下方清單）。';
+      var header=runState.driftDone?'三角定位完成。地圖多出一條<b style="color:#ff7a68">標紅的走廊</b>——那是它編造的，現實裡不存在。':'證據鏈 '+evidenceCount+' / 3 種。集滿任意 3 種證據，就能按「校準地圖」拆穿它（取得方式見下方清單）。';
       routeMap.innerHTML='<b>'+header+'</b>'+(
         route.length?'<br>'+route.map(function(r,i){
+          if(r.indexOf('FAKE::')===0){
+            var txt=r.slice(6);
+            var go=txt.indexOf('LEVEL -1')===0?' <button type="button" class="route-go" id="routeGo">▸ 仍要照著走</button>':'';
+            return '<span class="route-fake">⚠ '+txt+go+'</span>';
+          }
           return '<b>'+(i?'↳ ':'ENTRY ')+'</b>'+r;
         }).join('<br>'):'<br>尚未建立路線。地圖需要證據，不接受亂點門。'
       );
@@ -1988,13 +1998,13 @@ body.space-fold .corridor-depth{animation:spacepull .9s cubic-bezier(.2,.7,.2,1)
   }
   function triggerDoorDrift(evidenceCount){
     runState.driftDone=true;
-    runState.route.push('TRIANGULATION // '+evidenceCount+' 種證據交叉定位');
-    runState.route.push('LEVEL -1 // 門框偏移，地圖不可信');
+    runState.route.push('FAKE::TRIANGULATION // '+evidenceCount+' 種證據交叉定位（座標被竄改）');
+    runState.route.push('FAKE::LEVEL -1 // 不存在的走廊');
     markTask('map','三角定位完成：地圖不是出口，它是一份供詞。');
     document.body.classList.remove('space-fold');void document.body.offsetWidth;document.body.classList.add('space-fold');
     setTimeout(function(){document.body.classList.remove('space-fold');},950);
     if(driftFlash){driftFlash.classList.add('show');setTimeout(function(){driftFlash.classList.remove('show');},700);}
-    setRadio('CH-11 地圖回報了一條不存在的走廊。請不要相信它。',true);
+    setRadio('CH-11 看上方地圖——它多出一條標紅的走廊「LEVEL -1」。那是它編的，別點「仍要照著走」。',true);
     showToast('// DOOR DRIFT — 地圖開始說謊',2100);
   }
   function discoverUv(mark){
@@ -2051,6 +2061,16 @@ body.space-fold .corridor-depth{animation:spacepull .9s cubic-bezier(.2,.7,.2,1)
   if(radioScan)radioScan.addEventListener('click',cycleRadio);
   var mapCalibrate=document.getElementById('mapCalibrate');
   if(mapCalibrate)mapCalibrate.addEventListener('click',calibrateMap);
+  /* 點「仍要照著走」= 相信說謊的地圖 → 走進不存在的 LEVEL -1（落入 404） */
+  document.addEventListener('click',function(e){
+    if(!e.target.closest('#routeGo'))return;
+    e.preventDefault();e.stopPropagation();
+    setRadio('CH-11 你照著地圖走了進去……走廊在你背後合上了。',true);
+    showToast('// 你相信了地圖。LEVEL -1 並不存在——但你已經在裡面了。',2800);
+    document.body.classList.remove('noclip');void document.body.offsetWidth;document.body.classList.add('noclip');
+    setTimeout(function(){document.body.classList.remove('noclip');},1000);
+    setTimeout(function(){closeOperator();location.hash='level-404';},680);
+  });
   var quizStart=document.getElementById('quizStart');
   if(quizStart)quizStart.addEventListener('click',startQuiz);
   ['quizClose','quizAbort'].forEach(function(id){
