@@ -24,7 +24,7 @@
   --disp:"Space Grotesk","Noto Sans TC",sans-serif;
   --sans:"Noto Sans TC","Space Grotesk",sans-serif;
   --mono:"Space Mono","Courier New",ui-monospace,monospace;
-  --mx:50vw;--my:50vh;
+  --mx:50vw;--my:50vh;--px:0;--py:0;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -139,11 +139,27 @@ p.lead{font-size:1.08rem;line-height:1.85;color:var(--ink-soft);max-width:64ch;f
 /* ============================================================
    HERO（編輯式不對稱板塊）
    ============================================================ */
-.hero{position:relative;padding:clamp(2.5rem,6vw,5rem) 0 0}
+.hero{position:relative;padding:clamp(2.5rem,6vw,5rem) 0 0;overflow:hidden}
 .lights{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
 .lights span{position:absolute;height:7px;border-radius:3px;background:var(--cream-2);
   box-shadow:0 0 26px 10px var(--cream),0 0 70px 26px rgba(255,246,194,.32);animation:tubeflick var(--d,5s) infinite}
 @keyframes tubeflick{0%,95%,100%{opacity:.9}96%{opacity:.14}97%{opacity:.78}98%{opacity:.24}99%{opacity:.9}}
+.corridor-depth{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.78;perspective:900px}
+.corridor-layer{position:absolute;inset:4% -10% -12%;transform-origin:50% 50%;will-change:transform,opacity}
+.corridor-layer.far{transform:translate(calc(var(--px) * -10px),calc(var(--py) * -6px)) scale(1.02);
+  background:radial-gradient(ellipse at 50% 38%,rgba(255,246,194,.2),transparent 28%),
+    repeating-linear-gradient(90deg,transparent 0 70px,rgba(21,19,10,.16) 71px 73px,transparent 74px 142px)}
+.corridor-layer.mid{transform:translate(calc(var(--px) * 18px),calc(var(--py) * 8px)) rotateX(58deg) translateY(26%);
+  background:repeating-linear-gradient(90deg,rgba(21,19,10,.18) 0 2px,transparent 2px 82px),
+    linear-gradient(90deg,rgba(21,19,10,.22),transparent 18%,transparent 82%,rgba(21,19,10,.22));
+  opacity:.58}
+.corridor-layer.near{inset:18% -12% -4%;transform:translate(calc(var(--px) * -26px),calc(var(--py) * -12px));
+  background:linear-gradient(108deg,rgba(21,19,10,.22) 0 18%,transparent 18.4% 81.6%,rgba(21,19,10,.22) 82%),
+    radial-gradient(circle at calc(50% + var(--px) * 7%) 46%,transparent 0 18%,rgba(21,19,10,.16) 34%,transparent 55%);
+  opacity:.5}
+.corridor-layer.lightline{inset:0;transform:translate(calc(var(--px) * 32px),calc(var(--py) * 14px));
+  background:linear-gradient(90deg,transparent 8%,rgba(255,251,224,.52) 48%,rgba(255,251,224,.52) 52%,transparent 92%);
+  clip-path:polygon(48% 0,52% 0,59% 100%,41% 100%);filter:blur(.2px);opacity:.36}
 .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.55fr .95fr;gap:0;
   border:2px solid var(--ink);background:rgba(255,250,222,.4)}
 .hero-main{padding:clamp(2rem,4.5vw,3.4rem);border-right:2px solid var(--ink);
@@ -171,6 +187,34 @@ p.lead{font-size:1.08rem;line-height:1.85;color:var(--ink-soft);max-width:64ch;f
 .meta-row dd{margin:0;font-weight:500;text-align:right}
 .meta-row dd.red{color:#ff9e8a}.meta-row dd.grn{color:var(--crt)}
 .hero-side .btn-row{margin-top:auto;padding-top:1.4rem;flex-direction:column;gap:.6rem;align-items:stretch}
+.resident-scan{position:relative;margin:0 0 1rem;border:1px solid rgba(255,246,194,.2);background:#070602;overflow:hidden;
+  transform-style:preserve-3d;will-change:transform;transition:transform .28s cubic-bezier(.2,.7,.2,1)}
+.resident-scan img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;object-position:50% 34%;
+  filter:sepia(.28) contrast(1.12) saturate(.78) brightness(.86);will-change:transform;transition:transform .28s cubic-bezier(.2,.7,.2,1)}
+.resident-scan.portrait img{aspect-ratio:3/4;object-position:50% 30%}
+.resident-scan::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.28) 0 1px,transparent 1px 4px),
+    linear-gradient(90deg,rgba(232,115,31,.18),transparent 35%,rgba(43,122,105,.14));mix-blend-mode:screen}
+.resident-scan .scan-label{position:absolute;left:0;right:0;bottom:0;z-index:2;display:flex;justify-content:space-between;gap:.6rem;
+  padding:.38rem .55rem;background:rgba(7,6,2,.82);color:var(--cream);font-family:var(--mono);
+  font-size:.58rem;letter-spacing:.12em}
+.resident-scan .scan-lock{position:absolute;right:.55rem;top:.5rem;z-index:2;color:#aef0c8;font-family:var(--mono);
+  font-size:.58rem;letter-spacing:.14em;text-shadow:0 0 10px rgba(174,240,200,.65);transform:translateZ(28px)}
+.id-card{position:relative;margin-top:1rem;border:2px solid var(--ink);background:rgba(255,250,222,.38);
+  display:grid;grid-template-columns:minmax(150px,.62fr) 1fr;gap:0;box-shadow:var(--shadow);
+  transform-style:preserve-3d;will-change:transform;transition:transform .28s cubic-bezier(.2,.7,.2,1)}
+.id-card .resident-scan{margin:0;border:0;border-right:2px solid var(--ink)}
+.id-card-body{padding:1rem 1.1rem;display:flex;flex-direction:column;justify-content:space-between;gap:.7rem}
+.id-card-body .id-title{font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;color:var(--hazard)}
+.id-card-body h3{font-size:1.45rem;margin:.2rem 0;color:var(--ink)}
+.id-card-body p{margin:0;color:var(--ink-soft);line-height:1.65;font-size:.9rem}
+.id-stamp{align-self:flex-start;border:2px solid var(--danger);color:var(--danger);font-family:var(--mono);
+  letter-spacing:.18em;font-size:.72rem;padding:.35rem .7rem;transform:rotate(-3deg);font-weight:700}
+.op-id{display:grid;grid-template-columns:72px 1fr;gap:.75rem;align-items:center;margin-top:.85rem}
+.op-id .resident-scan{margin:0;border-color:rgba(174,240,200,.35)}
+.op-id .resident-scan img{aspect-ratio:1/1;object-position:50% 32%}
+.op-id p{margin:0;color:#a99e63;font-size:.66rem;line-height:1.55;letter-spacing:.08em}
+.op-id b{display:block;color:#aef0c8;font-size:.68rem;letter-spacing:.12em;margin-bottom:.18rem}
 
 /* 統計帶（板塊條） */
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-top:0;
@@ -413,7 +457,7 @@ body.noclip #app{animation:nc .55s steps(2) 2}
 .cap.on{opacity:1;transform:translateX(-50%) translateY(0)}
 
 /* BlockStudio 式滾動縮放字（scroll-scaling type） */
-.zoomy{height:240vh;position:relative;padding:0}
+.zoomy{height:170vh;position:relative;padding:0;border-bottom:2px solid var(--ink)}
 .zoomy .stage{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;
   align-items:center;justify-content:center;overflow:hidden}
 .zword{font-family:var(--disp);font-weight:700;letter-spacing:-.02em;line-height:1;color:var(--ink);
@@ -449,7 +493,121 @@ body.noclip #app{animation:nc .55s steps(2) 2}
 .vhs-btn::after{content:"";margin-left:5px;border-style:solid;
   border-width:14px 0 14px 24px;border-color:transparent transparent transparent #fffbe0}
 
-/* 圖鑑加密檔案（點擊解密，localStorage 記錄進度） */
+/* 黑光防偽墨水：關燈後用手電筒顯形 */
+.view{position:relative}
+.uvfield{position:absolute;inset:0;pointer-events:none;z-index:5;overflow:hidden}
+.uvfield::before{content:"";position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .25s;
+  background:radial-gradient(circle 190px at var(--mx) var(--my),rgba(174,240,200,.16),transparent 72%)}
+body.lightsout .uvfield::before{opacity:1}
+.uv{position:absolute;font-family:var(--mono);white-space:nowrap;opacity:0;pointer-events:none;
+  padding:.14rem .34rem;border:1px solid rgba(174,240,200,.22);background:rgba(7,6,2,.12);
+  mix-blend-mode:screen;filter:blur(1.2px);
+  color:#aef0c8;text-shadow:0 0 10px rgba(140,255,190,.65),0 0 28px rgba(140,255,190,.3);
+  font-size:clamp(.78rem,1.6vw,.95rem);letter-spacing:.18em;transform:rotate(var(--rot,-3deg));
+  transition:opacity .12s linear,filter .12s linear}
+body:not(.lightsout) .uv{opacity:0!important}
+.uv-warn{position:fixed;left:50%;top:14%;transform:translate(-50%,-10px);z-index:130;width:min(460px,88vw);
+  background:rgba(7,6,2,.94);border:1px solid rgba(174,240,200,.5);padding:1.1rem 1.3rem;
+  color:#aef0c8;opacity:0;visibility:hidden;transition:.4s;pointer-events:none;
+  box-shadow:0 0 44px rgba(140,255,190,.16)}
+.uv-warn.show,body.lightsout:not(.uv-guide-done) .uv-warn{opacity:1;visibility:visible;transform:translate(-50%,0)}
+.uv-warn b{font-family:var(--mono);letter-spacing:.18em;display:block;margin-bottom:.45rem}
+.uv-warn p{margin:0;font-size:.88rem;line-height:1.7;color:#cdebd8}
+body.battery-dead .uvfield::before{opacity:.18}
+body.battery-dead .blackout{background:radial-gradient(circle 92px at var(--mx) var(--my),transparent 0,transparent 44px,rgba(7,6,2,.97) 170px)}
+
+/* M.E.G. 值班台：本次探索機關清單 */
+.operator-tab{position:fixed;right:0;top:48%;z-index:95;transform:translateY(-50%);
+  writing-mode:vertical-rl;text-orientation:mixed;border:2px solid var(--ink);border-right:0;
+  background:var(--cream);color:var(--ink);font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;
+  padding:.9rem .5rem;cursor:pointer;box-shadow:var(--shadow);transition:.22s}
+.operator-tab:hover,.operator-tab.open{background:var(--hazard);color:#fff}
+.operator-panel{position:fixed;right:0;top:0;bottom:0;z-index:94;width:min(390px,92vw);
+  background:rgba(12,10,4,.97);color:#d8cf95;border-left:2px solid var(--hazard);
+  transform:translateX(102%);transition:transform .32s cubic-bezier(.2,.7,.2,1);box-shadow:var(--shadow);
+  display:flex;flex-direction:column;font-family:var(--mono)}
+.operator-panel.open{transform:none}
+.op-head{padding:1.1rem 1.1rem .9rem;border-bottom:1px solid rgba(255,246,194,.16);
+  background:repeating-linear-gradient(0deg,rgba(255,246,194,.045) 0 1px,transparent 1px 4px)}
+.op-head b{display:block;color:var(--cream);letter-spacing:.18em;font-size:.86rem}
+.op-head span{display:block;color:#8f8552;font-size:.66rem;letter-spacing:.12em;margin-top:.35rem}
+.op-close{position:absolute;right:.7rem;top:.62rem;width:34px;height:34px;border:1px solid rgba(255,246,194,.28);
+  background:transparent;color:var(--cream);font-family:var(--mono);cursor:pointer}
+.op-close:hover{background:var(--hazard);border-color:var(--hazard);color:#fff}
+.op-body{padding:1rem;overflow:auto}
+.op-meter{margin-bottom:1rem;border:1px solid rgba(255,246,194,.18);background:rgba(255,246,194,.04)}
+.op-meter-row{display:grid;grid-template-columns:86px 1fr 44px;gap:.6rem;align-items:center;
+  padding:.65rem .75rem;border-bottom:1px solid rgba(255,246,194,.12);font-size:.68rem;letter-spacing:.12em}
+.op-meter-row:last-child{border-bottom:0}
+.op-meter-row label{color:#8f8552}
+.op-bar{height:7px;border:1px solid rgba(255,246,194,.2);background:#070602;overflow:hidden}
+.op-bar i{display:block;height:100%;width:0;background:var(--safe);transition:width .25s,background .25s}
+.op-bar.entity i{background:var(--hazard)}
+.op-meter-row output{color:var(--cream);text-align:right}
+.op-section{margin:1rem 0 0}
+.op-section h4{font-size:.68rem;letter-spacing:.2em;color:var(--hazard);margin:0 0 .55rem;text-transform:uppercase}
+.quest-list{list-style:none;margin:0;padding:0;border:1px solid rgba(255,246,194,.18);
+  background:repeating-linear-gradient(0deg,rgba(255,246,194,.055) 0 1px,transparent 1px 12px)}
+.quest-list li{display:grid;grid-template-columns:20px 1fr;gap:.55rem;align-items:start;
+  padding:.62rem .7rem;border-bottom:1px solid rgba(255,246,194,.1);font-size:.75rem;line-height:1.45}
+.quest-list li:last-child{border-bottom:0}
+.quest-list .box{width:12px;height:12px;border:1px solid #8f8552;margin-top:.18rem;background:#070602}
+.quest-list b{display:block;color:var(--cream);font-size:.76rem;letter-spacing:.04em}
+.quest-list small{display:block;color:#8f8552;font-size:.64rem;margin-top:.16rem}
+.quest-list li.done{opacity:.5}
+.quest-list li.done .box{background:var(--safe);border-color:var(--safe);box-shadow:0 0 12px rgba(43,122,105,.6)}
+.quest-list li.done b,.quest-list li.done small{text-decoration:line-through}
+.route-map{min-height:82px;border:1px solid rgba(255,246,194,.18);padding:.7rem;
+  color:#a99e63;background:rgba(255,246,194,.04);font-size:.68rem;line-height:1.65}
+.route-map b{color:var(--cream);font-weight:400}
+.op-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(92px,1fr));gap:.55rem;margin-top:.8rem}
+.op-actions button,.evidence-tabs button,.quiz-actions button{border:1px solid rgba(255,246,194,.24);
+  background:rgba(255,246,194,.06);color:var(--cream);font-family:var(--mono);font-size:.66rem;
+  letter-spacing:.12em;padding:.58rem .5rem;cursor:pointer}
+.op-actions button:hover,.evidence-tabs button:hover,.quiz-actions button:hover{background:var(--hazard);border-color:var(--hazard);color:#fff}
+.trace-board{border:1px solid rgba(255,246,194,.18);border-top:0;background:rgba(255,246,194,.03);
+  padding:.65rem;display:grid;gap:.38rem}
+.trace-row{display:flex;align-items:center;justify-content:space-between;gap:.55rem;
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;color:#8f8552}
+.trace-row i{width:8px;height:8px;border-radius:50%;background:#40381b;box-shadow:none}
+.trace-row.found{color:#cfc790}.trace-row.found i{background:var(--safe);box-shadow:0 0 12px rgba(43,122,105,.55)}
+.trace-status{margin-top:.55rem;font-size:.68rem;line-height:1.55;color:#a99e63}
+.trace-status b{color:var(--cream);font-weight:400}
+.radio-strip{position:fixed;left:1rem;bottom:1rem;z-index:70;width:min(420px,calc(100vw - 2rem));
+  border:1px solid rgba(255,246,194,.24);background:rgba(7,6,2,.88);color:#cfc790;
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;padding:.65rem .85rem;
+  box-shadow:var(--shadow);opacity:.82;pointer-events:none}
+.radio-strip b{color:var(--hazard);margin-right:.45rem}
+.radio-strip.pulse{animation:nc .35s steps(2) 1}
+.drift-flash{position:fixed;inset:0;z-index:132;pointer-events:none;opacity:0;visibility:hidden;
+  background:repeating-linear-gradient(90deg,rgba(193,69,43,.18) 0 2px,transparent 2px 22px);
+  mix-blend-mode:multiply;transition:opacity .2s}
+.drift-flash.show{opacity:1;visibility:visible;animation:nc .45s steps(2) 1}
+body.space-fold #app{animation:spacefold .9s cubic-bezier(.2,.7,.2,1) 1}
+body.space-fold .corridor-depth{animation:spacepull .9s cubic-bezier(.2,.7,.2,1) 1}
+@keyframes spacefold{0%{transform:none;filter:none}18%{transform:perspective(900px) translateZ(0) scaleX(1.015) skewY(.4deg);filter:contrast(1.12)}
+  42%{transform:perspective(900px) translateZ(24px) scaleX(.965) skewY(-1deg);filter:hue-rotate(-12deg) contrast(1.35)}
+  64%{transform:perspective(900px) translateZ(-18px) scaleX(1.025);filter:brightness(.86) contrast(1.22)}
+  100%{transform:none;filter:none}}
+@keyframes spacepull{0%{opacity:.78;filter:none}40%{opacity:1;filter:blur(1.2px) contrast(1.5)}
+  100%{opacity:.78;filter:none}}
+.quiz-modal{position:fixed;inset:0;z-index:140;display:flex;align-items:center;justify-content:center;
+  background:rgba(7,6,2,.72);opacity:0;visibility:hidden;transition:.25s;padding:1rem}
+.quiz-modal.show{opacity:1;visibility:visible}
+.quiz-card{width:min(520px,92vw);background:var(--ink);color:var(--cream);border:2px solid var(--hazard);
+  box-shadow:var(--shadow);padding:1.2rem;font-family:var(--mono);position:relative}
+.quiz-card h3{font-size:1.05rem;color:var(--cream);margin:0 0 .8rem;letter-spacing:.1em}
+.quiz-card p{color:#cfc790;line-height:1.7;margin:.4rem 0 1rem;font-size:.86rem}
+.quiz-options{display:grid;gap:.55rem}
+.quiz-options button{text-align:left;border:1px solid rgba(255,246,194,.18);background:rgba(255,246,194,.05);
+  color:#e7dfb8;font-family:var(--mono);padding:.75rem;cursor:pointer}
+.quiz-options button:hover{background:rgba(232,115,31,.35);border-color:var(--hazard)}
+.evidence-tabs{display:flex;gap:.45rem;flex-wrap:wrap;padding:.7rem;border-top:1px solid rgba(255,246,194,.15);
+  background:#070602}
+.evidence-readout{border-top:1px solid rgba(255,246,194,.15);padding:.8rem;color:#cfc790;
+  background:#070602;font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;line-height:1.7}
+
+/* 圖鑑加密檔案（點擊解密，當次探索有效） */
 .specimen{position:relative}
 .card .lv{display:none}.card.locked .lv{display:block}
 .card .tv{display:block}.card.locked .tv{display:none}
@@ -550,6 +708,12 @@ body.noclip #app{animation:nc .55s steps(2) 2}
 <div class="view" id="view-home">
 <section class="hero wrap">
   <div class="lights"></div>
+  <div class="corridor-depth" aria-hidden="true">
+    <span class="corridor-layer far"></span>
+    <span class="corridor-layer mid"></span>
+    <span class="corridor-layer near"></span>
+    <span class="corridor-layer lightline"></span>
+  </div>
   <div class="hero-grid">
     <div class="hero-main">
       <span class="kicker">NO-CLIP DETECTED · 無剪輯事件</span>
@@ -562,6 +726,11 @@ body.noclip #app{animation:nc .55s steps(2) 2}
     </div>
     <aside class="hero-side">
       <div class="shead">// FILE — RESIDENT DOSSIER</div>
+      <figure class="resident-scan">
+        <img src="assets/resident-photo.jpg" alt="住民 BR-0001 的監控識別照片" loading="eager">
+        <span class="scan-lock">SUBJECT MATCH 87%</span>
+        <figcaption class="scan-label"><span>LAST SEEN // LEVEL 0</span><span>CCTV-04</span></figcaption>
+      </figure>
       <dl style="margin:0">
         <div class="meta-row"><dt>檔案編號 File No.</dt><dd>BR-0001</dd></div>
         <div class="meta-row"><dt>分類 Class</dt><dd class="red">LIMINAL / 閾限</dd></div>
@@ -584,6 +753,14 @@ body.noclip #app{animation:nc .55s steps(2) 2}
 <div class="marquee"><div>
   <span>KEEP MOVING</span><span>DRINK ALMOND WATER</span><span>DON'T LOOK BACK</span><span>STAY CALM</span><span>KEEP MOVING</span><span>DRINK ALMOND WATER</span><span>DON'T LOOK BACK</span><span>STAY CALM</span>
 </div></div>
+
+<!-- BlockStudio 式滾動縮放：房間正在擴張 -->
+<section class="zoomy" id="zoomy">
+  <div class="stage">
+    <div class="zword" id="zWord">後室<small>BACKROOMS · 600,000,000 KM²</small></div>
+    <div class="zsub" id="zSub">SCROLL — 房間正在擴張 · THE ROOM IS EXPANDING</div>
+  </div>
+</section>
 
 <section class="wrap">
   <div class="sec-head reveal">
@@ -678,13 +855,6 @@ body.noclip #app{animation:nc .55s steps(2) 2}
   </div>
 </section>
 
-<!-- BlockStudio 式滾動縮放：房間正在擴張 -->
-<section class="zoomy" id="zoomy">
-  <div class="stage">
-    <div class="zword" id="zWord">後室<small>BACKROOMS · 600,000,000 KM²</small></div>
-    <div class="zsub" id="zSub">SCROLL — 房間正在擴張 · THE ROOM IS EXPANDING</div>
-  </div>
-</section>
 </div>
 
 <!-- ============================================================ 01 LEVELS ============================================================ -->
@@ -1269,6 +1439,21 @@ body.noclip #app{animation:nc .55s steps(2) 2}
       <span class="kicker" style="background:var(--safe)">✔ CERTIFIED RESIDENT · 認證住民</span>
       <h1 style="font-size:clamp(2.4rem,8vw,5.6rem)"><span class="glitch" data-text="資深粉絲">資深粉絲</span><span class="en">CERTIFIED FAN</span></h1>
       <p class="lead" style="margin-top:1.4rem">我不是路過的訪客，而是把後室走廊走出回音的<strong>資深住民</strong>。這是我的後室履歷。</p>
+      <div class="id-card reveal">
+        <figure class="resident-scan portrait">
+          <img src="assets/resident-photo.jpg" alt="孫嘉佑的 M.E.G. 臨時住民證照片" loading="lazy">
+          <span class="scan-lock">VERIFIED</span>
+          <figcaption class="scan-label"><span>BR-0001</span><span>LEVEL 0</span></figcaption>
+        </figure>
+        <div class="id-card-body">
+          <div>
+            <div class="id-title">// TEMPORARY RESIDENT CARD</div>
+            <h3>孫嘉佑</h3>
+            <p>已建立後室檔案室。狀態：回返住民。專長：層級索引、實體辨識、黑光證據判讀。</p>
+          </div>
+          <span class="id-stamp">CERTIFIED RESIDENT</span>
+        </div>
+      </div>
     </div>
     <aside class="hero-side">
       <div class="shead">// CERTIFICATION</div>
@@ -1424,6 +1609,55 @@ body.noclip #app{animation:nc .55s steps(2) 2}
   <path d="M70,70 Q120,112 170,70"/>
   <path d="M78,76 Q120,108 162,76" stroke-width="1.5" stroke-dasharray="7 6" opacity=".8"/>
 </svg></div>
+<div class="uv-warn" id="uvWarn">
+  <b>⚠ 黑光檢視模式 · UV MODE</b>
+  <p>像檢查鈔票防偽線一樣掃描這座檔案室。<br>先看標題旁、照片角落、加密卡片邊緣與頁尾提示——<strong>有些字，只吃黑光。</strong></p>
+</div>
+<button class="operator-tab" id="operatorTab" aria-expanded="false" aria-controls="operatorPanel">M.E.G. 值班台</button>
+<aside class="operator-panel" id="operatorPanel" aria-label="M.E.G. 值班台">
+  <button class="op-close" id="operatorClose" aria-label="關閉值班台">×</button>
+  <div class="op-head">
+    <b>M.E.G. ASSIST LINE</b>
+    <span id="opSummary">本次探索：0 / 0 機關確認</span>
+    <div class="op-id">
+      <figure class="resident-scan">
+        <img src="assets/resident-photo.jpg" alt="M.E.G. 值班台使用者識別照片">
+      </figure>
+      <p><b>SUBJECT BR-0001</b>RETURNING RESIDENT<br>FACE MATCH 87% · WATCHLIST SAFE</p>
+    </div>
+  </div>
+  <div class="op-body">
+    <div class="op-meter">
+      <div class="op-meter-row"><label>TORCH</label><div class="op-bar"><i id="batteryBar"></i></div><output id="batteryOut">100%</output></div>
+      <div class="op-meter-row"><label>ENTITY</label><div class="op-bar entity"><i id="entityBar"></i></div><output id="entityOut">0%</output></div>
+    </div>
+    <div class="op-section">
+      <h4>// 尚未觸發的機關</h4>
+      <ul class="quest-list" id="questList"></ul>
+    </div>
+    <div class="op-section">
+      <h4>// 會說謊的地圖</h4>
+      <div class="route-map" id="routeMap">尚未建立路線。地圖需要證據，不接受亂點門。</div>
+      <div class="trace-board" id="traceBoard"></div>
+      <div class="op-actions">
+        <button type="button" id="radioScan">掃描無線電</button>
+        <button type="button" id="mapCalibrate">校準地圖</button>
+        <button type="button" id="quizStart">住民審核</button>
+      </div>
+    </div>
+  </div>
+</aside>
+<div class="radio-strip" id="radioStrip"><b>M.E.G.</b><span>CH-00 待命中。若走廊開始回應你，先看值班台。</span></div>
+<div class="drift-flash" id="driftFlash"></div>
+<div class="quiz-modal" id="quizModal" role="dialog" aria-modal="true" aria-label="住民權限審核">
+  <div class="quiz-card">
+    <button class="op-close" id="quizClose" aria-label="關閉住民審核">×</button>
+    <h3 id="quizTitle">// RESIDENT CHECK</h3>
+    <p id="quizQuestion">審核尚未開始。</p>
+    <div class="quiz-options" id="quizOptions"></div>
+    <div class="quiz-actions" style="margin-top:.9rem"><button type="button" id="quizAbort">中止審核</button></div>
+  </div>
+</div>
 
 <script>
 (function(){
@@ -1431,6 +1665,277 @@ body.noclip #app{animation:nc .55s steps(2) 2}
   var titleMap={home:'首頁',levels:'層級圖鑑',entities:'實體檔案',about:'關於後室',survival:'生存指南','fan-cred':'資深粉絲認證','level-404':'LEVEL 404 — ???'};
   var aboutGroup=['about','survival','fan-cred'];
   var root=document.documentElement;
+  var uvWarn=document.getElementById('uvWarn');
+  var uvMap={
+    home:[
+      {x:'7%',y:'7%',r:'-3deg',t:'SECURITY THREAD // REALITY IS THIN'},
+      {x:'56%',y:'15%',r:'2deg',t:'THE HUM HAS A PATTERN'},
+      {x:'70%',y:'26%',r:'2deg',t:'SUBJECT BR-0001 // HE HAS BEEN HERE BEFORE'},
+      {x:'12%',y:'40%',r:'-6deg',t:'掃描照片角落：第一段錄像不是開始'},
+      {x:'61%',y:'66%',r:'4deg',t:'ALMOND WATER MARK // DRINK SLOWLY'},
+      {x:'20%',y:'88%',r:'-2deg',t:'完整咒語藏在肌肉記憶：N O C L I P'}
+    ],
+    levels:[
+      {x:'8%',y:'4%',r:'-4deg',t:'LEVEL INDEX WATERMARK // DOORS LIE'},
+      {x:'54%',y:'21%',r:'3deg',t:'LEVEL !：紅燈亮起時不要讀完這行'},
+      {x:'12%',y:'47%',r:'-2deg',t:'LEVEL 37 // 水很安靜，不代表水裡沒有東西'},
+      {x:'58%',y:'72%',r:'4deg',t:'加密層級可解，但不會替你記住'},
+      {x:'16%',y:'91%',r:'-5deg',t:'THE HUB DOOR OPENS ONLY ONCE'}
+    ],
+    entities:[
+      {x:'9%',y:'5%',r:'-3deg',t:'ENTITY FILE UV SEAL // CHECK THE SEAMS'},
+      {x:'54%',y:'20%',r:'5deg',t:'微笑沒有影子時，立刻離開'},
+      {x:'14%',y:'43%',r:'-4deg',t:'聽見你的名字，不要回答'},
+      {x:'60%',y:'66%',r:'2deg',t:'JERRY APPROVED // SAFE FOR THREE DAYS'},
+      {x:'18%',y:'89%',r:'-2deg',t:'深水不是容器，深水可能是身體'}
+    ],
+    about:[
+      {x:'8%',y:'10%',r:'-4deg',t:'2019 // FIRST BREACH'},
+      {x:'58%',y:'26%',r:'3deg',t:'KENOPSIA：本該有人，卻沒有人的地方'},
+      {x:'13%',y:'54%',r:'-2deg',t:'FORMAT IS THE MONSTER'},
+      {x:'55%',y:'82%',r:'4deg',t:'低解析度不是瑕疵，是可信度工程'}
+    ],
+    survival:[
+      {x:'8%',y:'9%',r:'-5deg',t:'SURVIVAL WATERMARK // STAY QUIET'},
+      {x:'56%',y:'23%',r:'2deg',t:'粉筆標記要畫兩次：第一次給自己，第二次給下一位'},
+      {x:'13%',y:'53%',r:'-3deg',t:'名字不是你的名字，聲音不是那個人'},
+      {x:'54%',y:'83%',r:'4deg',t:'先活下去，再談出口'}
+    ],
+    'fan-cred':[
+      {x:'8%',y:'8%',r:'-4deg',t:'CERTIFIED WATERMARK // RESIDENT BR-0001'},
+      {x:'42%',y:'17%',r:'-3deg',t:'FACE MATCH 87% // DO NOT TRUST THE EXIT'},
+      {x:'56%',y:'19%',r:'3deg',t:'第 9 枚徽章不在清單裡'},
+      {x:'13%',y:'47%',r:'-2deg',t:'逐幀看過的人，會先注意到牆角'},
+      {x:'58%',y:'78%',r:'4deg',t:'LORE MASTER // 真正的履歷藏在黑暗裡'}
+    ],
+    'level-404':[
+      {x:'12%',y:'18%',r:'-4deg',t:'YOU FOUND THE WATERMARK'},
+      {x:'58%',y:'42%',r:'3deg',t:'NO-CLIPPER VERIFIED'},
+      {x:'18%',y:'74%',r:'-2deg',t:'這不是出口，這是簽到簿'}
+    ]
+  };
+  var tasks=[
+    {id:'operator',name:'打開 M.E.G. 值班台',hint:'點右側直立端子，查看本次探索檔案'},
+    {id:'torch',name:'啟動黑光檢視',hint:'點右上「關燈」，掃描牆面防偽字'},
+    {id:'uv-scan',name:'掃出第一段防偽字',hint:'關燈後移動手電筒，掃標題與照片角落'},
+    {id:'uv-puzzle',name:'拼出黑光線索',hint:'找到 3 段以上黑光字跡'},
+    {id:'almond',name:'喝掉一口杏仁水',hint:'點擊杏仁水瓶，補充手電筒電量'},
+    {id:'decrypt',name:'解密一份加密檔案',hint:'到層級或實體圖鑑，點擊鎖定卡片'},
+    {id:'radio',name:'收聽 M.E.G. 無線電',hint:'在值班台按「掃描無線電」'},
+    {id:'evidence',name:'檢查 VHS 異常幀',hint:'在尋獲錄像下方切到「異常幀」'},
+    {id:'map',name:'完成三角定位',hint:'收集 3 種證據後，在值班台按「校準地圖」'},
+    {id:'proximity',name:'觸發實體接近警報',hint:'關燈太久、亂玩燈泡或停留過久'},
+    {id:'noclip-key',name:'觸發短暫 No-Clip',hint:'按一次鍵盤 N'},
+    {id:'level404',name:'墜入不存在的層級',hint:'在頁面上輸入完整咒語 noclip'},
+    {id:'bulb',name:'把燈泡玩壞',hint:'連點左上小燈泡 6 次'},
+    {id:'quiz',name:'完成住民權限審核',hint:'在值班台啟動「住民審核」'}
+  ];
+  var radioMessages=[
+    'CH-01 M.E.G.：如果門牌重複三次，第四扇門不要開。',
+    'CH-04 雜訊：Level 9 的鄰居不會留下影子。',
+    'CH-07 補給站：杏仁水可穩定神智，也可穩定電壓。',
+    'CH-11 低語：地圖只是後室希望你相信的版本。',
+    'CH-19 M.E.G.：若黑光下出現你的名字，立刻關燈。'
+  ];
+  var quiz=[
+    {q:'住民審核 01：在後室中最應優先保存的是？',a:['方向感與冷靜','跑步速度','自拍證據'],ok:0},
+    {q:'住民審核 02：聽見熟悉聲音叫你的名字時應該？',a:['不回應，先確認來源','立刻回答','循聲狂奔'],ok:0},
+    {q:'住民審核 03：黑光下顯形的字跡最像什麼？',a:['防偽線與隱形墨水','普通裝飾字','壞掉的連結'],ok:0}
+  ];
+  var runState={
+    completed:{},battery:100,entity:4,route:[],uvFound:{},uvCount:0,
+    evidence:{uv:false,radio:false,decrypt:false,evidence:false,quiz:false,noclip:false},
+    radioIndex:0,driftDone:false,quizIndex:0,quizScore:0
+  };
+  var evidenceLabels={uv:'黑光字跡',radio:'無線電',decrypt:'加密檔案',evidence:'VHS 異常幀',quiz:'住民審核',noclip:'No-Clip'};
+  var operatorTab=document.getElementById('operatorTab');
+  var operatorPanel=document.getElementById('operatorPanel');
+  var operatorClose=document.getElementById('operatorClose');
+  var questList=document.getElementById('questList');
+  var opSummary=document.getElementById('opSummary');
+  var routeMap=document.getElementById('routeMap');
+  var traceBoard=document.getElementById('traceBoard');
+  var radioStrip=document.getElementById('radioStrip');
+  var driftFlash=document.getElementById('driftFlash');
+  var batteryBar=document.getElementById('batteryBar');
+  var batteryOut=document.getElementById('batteryOut');
+  var entityBar=document.getElementById('entityBar');
+  var entityOut=document.getElementById('entityOut');
+  var quizModal=document.getElementById('quizModal');
+  var quizTitle=document.getElementById('quizTitle');
+  var quizQuestion=document.getElementById('quizQuestion');
+  var quizOptions=document.getElementById('quizOptions');
+  function clamp(n,min,max){return Math.max(min,Math.min(max,n));}
+  function setRadio(msg,pulse){
+    if(!radioStrip)return;
+    radioStrip.innerHTML='<b>M.E.G.</b><span>'+msg+'</span>';
+    if(pulse){radioStrip.classList.remove('pulse');void radioStrip.offsetWidth;radioStrip.classList.add('pulse');}
+  }
+  function updateFooterSignal(msg){
+    var line=document.querySelector('.foot-bottom span');
+    if(line)line.textContent='⚠ '+msg;
+  }
+  function renderOperator(){
+    var done=tasks.filter(function(t){return runState.completed[t.id];}).length;
+    var evidenceCount=Object.keys(runState.evidence).filter(function(k){return runState.evidence[k];}).length;
+    if(opSummary)opSummary.textContent='本次探索：'+done+' / '+tasks.length+' 機關確認';
+    if(questList){questList.innerHTML=tasks.map(function(t){
+      var ok=!!runState.completed[t.id];
+      return '<li class="'+(ok?'done':'')+'"><span class="box"></span><span><b>'+t.name+'</b><small>'+t.hint+'</small></span></li>';
+    }).join('');}
+    if(batteryBar){batteryBar.style.width=runState.battery.toFixed(0)+'%';
+      batteryBar.style.background=runState.battery<22?'var(--danger)':runState.battery<45?'var(--hazard)':'var(--safe)';}
+    if(batteryOut)batteryOut.textContent=runState.battery.toFixed(0)+'%';
+    if(entityBar)entityBar.style.width=runState.entity.toFixed(0)+'%';
+    if(entityOut)entityOut.textContent=runState.entity.toFixed(0)+'%';
+    if(routeMap){
+      var route=runState.route.slice(-7);
+      var header=runState.driftDone?'三角定位完成。地圖已承認自己不可信。':'證據鏈 '+evidenceCount+' / 3。先收集不同來源，再校準地圖。';
+      routeMap.innerHTML='<b>'+header+'</b>'+(
+        route.length?'<br>'+route.map(function(r,i){
+          return '<b>'+(i?'↳ ':'ENTRY ')+'</b>'+r;
+        }).join('<br>'):'<br>尚未建立路線。地圖需要證據，不接受亂點門。'
+      );
+    }
+    if(traceBoard){
+      traceBoard.innerHTML=Object.keys(evidenceLabels).map(function(k){
+        var found=runState.evidence[k];
+        return '<div class="trace-row '+(found?'found':'')+'"><span>'+evidenceLabels[k]+'</span><i></i></div>';
+      }).join('')+'<div class="trace-status"><b>校準條件：</b>至少 3 種不同證據。頁面切換只記錄路線，不再觸發異常。</div>';
+    }
+  }
+  function markTask(id,msg){
+    if(runState.completed[id])return;
+    runState.completed[id]=true;
+    renderOperator();
+    if(msg)updateFooterSignal(msg);
+  }
+  function adjustBattery(delta){
+    runState.battery=clamp(runState.battery+delta,0,100);
+    document.body.classList.toggle('battery-dead',runState.battery<=8);
+    if(runState.battery<=18)setRadio('CH-00 手電筒電壓過低，黑光層會開始收縮。',true);
+    renderOperator();
+  }
+  function adjustEntity(delta){
+    runState.entity=clamp(runState.entity+delta,0,100);
+    if(runState.entity>=50)markTask('proximity','實體接近度超過安全值。不要停在走廊中央。');
+    if(runState.entity>=75)setRadio('CH-09 警告：有東西正沿著你的路線回溯。',true);
+    renderOperator();
+  }
+  function noteEvidence(type,msg){
+    if(!runState.evidence[type]){
+      runState.evidence[type]=true;
+      if(msg)setRadio(msg,true);
+      renderOperator();
+    }
+  }
+  function openOperator(){
+    operatorPanel.classList.add('open');
+    operatorTab.classList.add('open');
+    operatorTab.setAttribute('aria-expanded','true');
+    markTask('operator','M.E.G. 值班台已建立本次探索檔案。');
+  }
+  function closeOperator(){
+    operatorPanel.classList.remove('open');
+    operatorTab.classList.remove('open');
+    operatorTab.setAttribute('aria-expanded','false');
+  }
+  function addRoute(view){
+    var label=titleMap[view]||view;
+    if(runState.route[runState.route.length-1]!==label){
+      runState.route.push(label);
+    }
+    renderOperator();
+  }
+  function calibrateMap(){
+    var evidenceCount=Object.keys(runState.evidence).filter(function(k){return runState.evidence[k];}).length;
+    if(evidenceCount<3){
+      setRadio('CH-11 校準失敗：至少需要三種不同證據。目前只有 '+evidenceCount+' 種。',true);
+      showToast('// MAP CALIBRATION FAILED — 證據不足 '+evidenceCount+'/3',1900);
+      return;
+    }
+    if(runState.driftDone){
+      setRadio('CH-11 地圖已校準過一次。第二次開始，它只會學會說更好的謊。',true);
+      return;
+    }
+    triggerDoorDrift(evidenceCount);
+  }
+  function triggerDoorDrift(evidenceCount){
+    runState.driftDone=true;
+    runState.route.push('TRIANGULATION // '+evidenceCount+' 種證據交叉定位');
+    runState.route.push('LEVEL -1 // 門框偏移，地圖不可信');
+    markTask('map','三角定位完成：地圖不是出口，它是一份供詞。');
+    document.body.classList.remove('space-fold');void document.body.offsetWidth;document.body.classList.add('space-fold');
+    setTimeout(function(){document.body.classList.remove('space-fold');},950);
+    if(driftFlash){driftFlash.classList.add('show');setTimeout(function(){driftFlash.classList.remove('show');},700);}
+    setRadio('CH-11 地圖回報了一條不存在的走廊。請不要相信它。',true);
+    showToast('// DOOR DRIFT — 地圖開始說謊',2100);
+  }
+  function discoverUv(mark){
+    var id=mark.dataset.uvId;
+    if(!id||runState.uvFound[id])return;
+    runState.uvFound[id]=1;
+    runState.uvCount++;
+    noteEvidence('uv','CH-03 黑光證據已入檔。牆面不是空白，它只是等你關燈。');
+    markTask('uv-scan','黑光下發現防偽字跡。');
+    if(runState.uvCount>=3){
+      markTask('uv-puzzle','黑光碎片連成一句話：THE WALL REMEMBERS YOU。');
+      setRadio('CH-03 黑光碎片已拼合。牆記得你走過的方向。',true);
+    }
+    renderOperator();
+  }
+  function cycleRadio(){
+    var msg=radioMessages[runState.radioIndex%radioMessages.length];
+    runState.radioIndex++;
+    setRadio(msg,true);
+    noteEvidence('radio');
+    markTask('radio','M.E.G. 無線電收到第一段可讀訊號。');
+    adjustEntity(3);
+  }
+  function startQuiz(){
+    runState.quizIndex=0;runState.quizScore=0;
+    quizModal.classList.add('show');
+    renderQuiz();
+  }
+  function renderQuiz(){
+    var q=quiz[runState.quizIndex];
+    if(!q){
+      quizTitle.textContent='// RESIDENT VERIFIED';
+      quizQuestion.textContent='審核通過。臨時住民卡已簽發，本次探索權限提升。';
+      quizOptions.innerHTML='<button type="button" data-quiz-done="1">收下臨時住民卡</button>';
+      noteEvidence('quiz','CH-05 住民審核完成。人為證詞可作為第三類證據。');
+      markTask('quiz','住民權限審核完成。你現在比較像住民，不像訪客。');
+      return;
+    }
+    quizTitle.textContent='// RESIDENT CHECK '+(runState.quizIndex+1)+' / '+quiz.length;
+    quizQuestion.textContent=q.q;
+    quizOptions.innerHTML=q.a.map(function(a,i){return '<button type="button" data-answer="'+i+'">'+a+'</button>';}).join('');
+  }
+  renderOperator();
+  if(operatorTab)operatorTab.addEventListener('click',function(){
+    if(operatorPanel.classList.contains('open'))closeOperator();else openOperator();
+  });
+  if(operatorClose)operatorClose.addEventListener('click',closeOperator);
+  var radioScan=document.getElementById('radioScan');
+  if(radioScan)radioScan.addEventListener('click',cycleRadio);
+  var mapCalibrate=document.getElementById('mapCalibrate');
+  if(mapCalibrate)mapCalibrate.addEventListener('click',calibrateMap);
+  var quizStart=document.getElementById('quizStart');
+  if(quizStart)quizStart.addEventListener('click',startQuiz);
+  ['quizClose','quizAbort'].forEach(function(id){
+    var btn=document.getElementById(id);
+    if(btn)btn.addEventListener('click',function(){quizModal.classList.remove('show');});
+  });
+  if(quizOptions)quizOptions.addEventListener('click',function(e){
+    var done=e.target.closest('[data-quiz-done]');
+    if(done){quizModal.classList.remove('show');showToast('// 臨時住民卡已簽發',1800);return;}
+    var opt=e.target.closest('[data-answer]');if(!opt)return;
+    var q=quiz[runState.quizIndex],answer=+opt.dataset.answer;
+    if(answer===q.ok){runState.quizScore++;setRadio('CH-05 審核答案正確。保持冷靜。',true);}
+    else{adjustEntity(9);setRadio('CH-05 審核答案異常。值班員正在重新評估你。',true);}
+    runState.quizIndex++;
+    renderQuiz();
+  });
 
   /* ---- 進場閘門 ---- */
   var gate=document.getElementById('gate');
@@ -1451,18 +1956,93 @@ body.noclip #app{animation:nc .55s steps(2) 2}
     setTimeout(function(){if(!gate.classList.contains('gone'))openGate();},9000);
   }
 
-  /* ---- 手電筒游標 ---- */
+  /* ---- 手電筒游標 / 黑光掃描 ---- */
   var tx=window.innerWidth/2,ty=window.innerHeight/2,raf=false;
-  window.addEventListener('mousemove',function(e){tx=e.clientX;ty=e.clientY;
+  function seedUv(scope,view){
+    if(!scope||scope.dataset.uvSeeded)return;
+    var marks=uvMap[view]||[];
+    if(!marks.length)return;
+    scope.dataset.uvSeeded='1';
+    var field=document.createElement('div');
+    field.className='uvfield';
+    field.setAttribute('aria-hidden','true');
+    marks.forEach(function(m,idx){
+      var s=document.createElement('span');
+      s.className='uv';
+      s.dataset.uvId=view+'-'+idx;
+      s.textContent=m.t;
+      s.style.left=m.x;
+      s.style.top=m.y;
+      s.style.setProperty('--rot',m.r||'-3deg');
+      field.appendChild(s);
+    });
+    scope.appendChild(field);
+  }
+  function showUvGuide(){
+    if(!uvWarn)return;
+    document.body.classList.remove('uv-guide-done');
+    uvWarn.classList.add('show');
+    clearTimeout(showUvGuide._t);
+    showUvGuide._t=setTimeout(function(){
+      document.body.classList.add('uv-guide-done');
+      uvWarn.classList.remove('show');
+    },7200);
+    showToast('// 黑光啟動：掃描標題、照片角落與加密卡片邊緣',2800);
+  }
+  function updateUvInk(){
+    var active=document.querySelector('.view.active');
+    if(!active)return;
+    var on=document.body.classList.contains('lightsout');
+    active.querySelectorAll('.uv').forEach(function(mark){
+      if(!on){mark.style.opacity=0;mark.style.filter='blur(1.2px)';return;}
+      var r=mark.getBoundingClientRect();
+      var px=Math.max(r.left,Math.min(tx,r.right));
+      var py=Math.max(r.top,Math.min(ty,r.bottom));
+      var dist=Math.hypot(px-tx,py-ty);
+      var p=Math.max(0,Math.min(1,(230-dist)/160))*(runState.battery<=8 ? .25 : 1);
+      mark.style.opacity=p?(.12+p*.88).toFixed(2):0;
+      mark.style.filter='blur('+((1-p)*1.2).toFixed(2)+'px)';
+      if(p>.72)discoverUv(mark);
+    });
+  }
+  function updateResidentDepth(){
+    if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+    document.querySelectorAll('.view.active .id-card,.view.active .hero-side .resident-scan,.operator-panel.open .op-id .resident-scan').forEach(function(card){
+      var r=card.getBoundingClientRect();
+      if(r.bottom<0||r.top>window.innerHeight||r.right<0||r.left>window.innerWidth)return;
+      var cx=r.left+r.width/2,cy=r.top+r.height/2;
+      var dx=clamp((tx-cx)/(r.width||1),-1,1),dy=clamp((ty-cy)/(r.height||1),-1,1);
+      card.style.transform='perspective(900px) rotateY('+(dx*5.5).toFixed(2)+'deg) rotateX('+(-dy*4.5).toFixed(2)+'deg) translateZ(0)';
+      var img=card.querySelector('img');
+      if(img)img.style.transform='translate('+(dx*-8).toFixed(2)+'px,'+(dy*-6).toFixed(2)+'px) scale(1.045)';
+    });
+  }
+  function moveTorch(x,y){
+    tx=x;ty=y;
     if(!raf){raf=true;requestAnimationFrame(function(){
       root.style.setProperty('--mx',tx+'px');root.style.setProperty('--my',ty+'px');
+      var ndx=tx/window.innerWidth-.5,ndy=ty/window.innerHeight-.5;
+      root.style.setProperty('--px',ndx.toFixed(4));root.style.setProperty('--py',ndy.toFixed(4));
       var para=document.querySelector('.view.active .parallax');
       if(para){var dx=tx/window.innerWidth-.5,dy=ty/window.innerHeight-.5;
         para.style.transform='translate('+(dx*8).toFixed(1)+'px,'+(dy*5).toFixed(1)+'px)';}
-      raf=false;});}});
+      updateUvInk();
+      updateResidentDepth();
+      raf=false;});}
+  }
+  window.addEventListener('mousemove',function(e){moveTorch(e.clientX,e.clientY);});
+  window.addEventListener('touchstart',function(e){if(e.touches&&e.touches[0])moveTorch(e.touches[0].clientX,e.touches[0].clientY);},{passive:true});
+  window.addEventListener('touchmove',function(e){if(e.touches&&e.touches[0])moveTorch(e.touches[0].clientX,e.touches[0].clientY);},{passive:true});
   document.getElementById('torchBtn').addEventListener('click',function(){
     var on=document.body.classList.toggle('lightsout');
-    this.textContent=on?'● 開燈':'○ 關燈';});
+    this.textContent=on?'● 開燈':'○ 關燈';
+    if(on){showUvGuide();markTask('torch','黑光檢視模式已啟動，牆面開始回應。');adjustEntity(4);}
+    else{
+      document.body.classList.remove('uv-guide-done');
+      if(uvWarn)uvWarn.classList.remove('show');
+    }
+    updateUvInk();
+  });
 
   /* ---- 燈條 ---- */
   function seedLights(scope){
@@ -1489,6 +2069,7 @@ body.noclip #app{animation:nc .55s steps(2) 2}
     document.title='後室 BACKROOMS · '+(titleMap[view]||'資深粉絲站');
     var scope=document.getElementById('view-'+view);
     seedLights(scope);
+    seedUv(scope,view);
     scope.querySelectorAll('.reveal').forEach(function(el,i){el.classList.remove('in');
       el.style.transitionDelay=(i%6*55)+'ms';setTimeout(function(){el.classList.add('in');},30);});
     scope.querySelectorAll('[data-count]').forEach(function(el){animateNum(el);});
@@ -1496,6 +2077,9 @@ body.noclip #app{animation:nc .55s steps(2) 2}
       i.style.width=(+i.parentElement.dataset.level||0)+'%';});},250);
     window.scrollTo({top:0,behavior:'auto'});
     document.getElementById('navRight').classList.remove('open');
+    addRoute(view);
+    if(view==='level-404')markTask('level404','LEVEL 404 已寫入本次探索檔案。');
+    setTimeout(updateUvInk,60);
   }
 
   /* ---- 導覽 ---- */
@@ -1523,10 +2107,14 @@ body.noclip #app{animation:nc .55s steps(2) 2}
     if(/input|textarea/i.test(e.target.tagName))return;
     if(e.key&&e.key.length===1)buf=(buf+e.key.toLowerCase()).slice(-6);
     if(e.key==='n'||e.key==='N'){
+      markTask('noclip-key','短暫 No-Clip 已記錄。牆面出現一瞬間的錯位。');
+      adjustEntity(4);
       document.body.classList.add('noclip');showToast('// NO-CLIP EVENT',1400);
       setTimeout(function(){document.body.classList.remove('noclip');},1100);}
     if(buf==='noclip'){buf='';
       document.body.classList.add('noclip');showToast('// NO-CLIP SUCCESSFUL — 墜入 LEVEL 404',2200);
+      noteEvidence('noclip','CH-00 No-Clip 事件已入檔。現實完整性低於可接受範圍。');
+      markTask('level404','完整咒語生效，LEVEL 404 正在打開。');
       setTimeout(function(){document.body.classList.remove('noclip');location.hash='level-404';},900);}
   });
 
@@ -1536,6 +2124,8 @@ body.noclip #app{animation:nc .55s steps(2) 2}
     var b=e.target.closest('.bottle');if(!b)return;
     b.classList.remove('glug');void b.offsetWidth;b.classList.add('glug');
     sips++;
+    markTask('almond','杏仁水補給已記錄，手電筒電量回升。');
+    adjustBattery(18);adjustEntity(-7);
     showToast(sips<3?'// 咕嚕…杏仁水 +1（'+sips+'/3）':sips===3?'// 後室化 −3%，理智恢復 ✔':'// 你喝太多了。史密斯先生表示讚許 =)',1700);
   });
 
@@ -1545,8 +2135,10 @@ body.noclip #app{animation:nc .55s steps(2) 2}
     bulb.addEventListener('click',function(e){e.stopPropagation();
       bulbHits++;
       if(bulbHits>=6){bulbHits=0;smiler.classList.add('show');
+        markTask('bulb','燈泡過載。某個笑容已短暫出現在黑暗中。');
+        adjustEntity(22);
         setTimeout(function(){smiler.classList.remove('show');showToast('// 不要再玩燈了。',1800);},1300);}
-      else if(bulbHits>=3){showToast('// 燈泡：'+bulbHits+'/6 …別這樣。',1100);}});}
+      else if(bulbHits>=3){adjustEntity(4);showToast('// 燈泡：'+bulbHits+'/6 …別這樣。',1100);}});}
 
   /* 發呆 45 秒 → 看守者凝視 */
   var watcher=document.getElementById('watcherEyes'),idleT;
@@ -1554,7 +2146,10 @@ body.noclip #app{animation:nc .55s steps(2) 2}
     idleT=setTimeout(function(){
       watcher.style.left=(8+Math.random()*70)+'vw';
       watcher.style.top=(12+Math.random()*60)+'vh';
-      watcher.classList.add('show');},45000);}
+      watcher.classList.add('show');
+      adjustEntity(18);
+      markTask('proximity','看守者已出現。它不是攻擊你，它只是記住你。');
+    },45000);}
   ['mousemove','keydown','scroll','touchstart','click'].forEach(function(ev){
     window.addEventListener(ev,resetIdle,{passive:true});});
   resetIdle();
@@ -1587,12 +2182,9 @@ body.noclip #app{animation:nc .55s steps(2) 2}
     ncPct.textContent=(p<=0?'SCROLL — ':'')+Math.round(p*100)+'% NO-CLIP';
     caps.forEach(function(c){var g=c.dataset.r.split(',');c.classList.toggle('on',p>=+g[0]&&p<=+g[1]);});
   }
-  /* 圖鑑加密檔案：點擊解密 + localStorage 永久記錄 */
-  var DEXKEY='br_unlocked';
-  var dexDone=[];try{dexDone=JSON.parse(localStorage.getItem(DEXKEY)||'[]')}catch(_){}
-  document.querySelectorAll('.card[data-file]').forEach(function(c){
-    if(dexDone.indexOf(c.dataset.file)>=0)c.classList.remove('locked');
-  });
+  /* 圖鑑加密檔案：點擊解密，本次瀏覽有效 */
+  var dexDone=[];
+  document.querySelectorAll('.card[data-file]').forEach(function(c){c.classList.add('locked');});
   function dexCount(){
     [['view-levels','dexLevels'],['view-entities','dexEntities']].forEach(function(p){
       var v=document.getElementById(p[0]),el=document.getElementById(p[1]);
@@ -1605,11 +2197,13 @@ body.noclip #app{animation:nc .55s steps(2) 2}
   document.addEventListener('click',function(e){
     var c=e.target.closest('.card.locked[data-file]');if(!c)return;
     c.classList.remove('locked');c.classList.add('unlock-flash');
-    if(dexDone.indexOf(c.dataset.file)<0){dexDone.push(c.dataset.file);
-      try{localStorage.setItem(DEXKEY,JSON.stringify(dexDone))}catch(_){}}
+    if(dexDone.indexOf(c.dataset.file)<0)dexDone.push(c.dataset.file);
     var db=c.querySelector('.danger-bar i');
     if(db)setTimeout(function(){db.style.width=(+db.parentElement.dataset.level||0)+'%';},80);
-    showToast('// 檔案解密成功 — 住民權限已記錄',1900);
+    noteEvidence('decrypt','CH-12 加密檔案已入檔。這份資料重新整理後會自毀。');
+    markTask('decrypt','一份加密檔案已解密，但重新整理後權限會歸零。');
+    adjustEntity(6);
+    showToast('// 檔案解密成功 — 本次探索權限已開啟',1900);
     dexCount();
   });
   dexCount();
@@ -1624,8 +2218,35 @@ body.noclip #app{animation:nc .55s steps(2) 2}
     f.title='The Backrooms (Found Footage) — Kane Pixels';
     document.getElementById('vhsFrame').appendChild(f);
     vp.remove();
+    adjustEntity(5);
     showToast('// 播放中 — 注意身後',1800);
   });}
+  (function installEvidenceTools(){
+    var frame=document.getElementById('vhsFrame');
+    if(!frame||document.getElementById('evidenceReadout'))return;
+    var tabs=document.createElement('div');
+    tabs.className='evidence-tabs';
+    tabs.innerHTML='<button type="button" data-evidence="video">影像</button><button type="button" data-evidence="transcript">逐字稿</button><button type="button" data-evidence="anomaly">異常幀</button>';
+    var read=document.createElement('div');
+    read.className='evidence-readout';
+    read.id='evidenceReadout';
+    read.textContent='EVIDENCE MODE // 目前檢視：影像。切換到逐字稿或異常幀，可比對錄像中不該存在的訊號。';
+    frame.parentElement.appendChild(tabs);
+    frame.parentElement.appendChild(read);
+    tabs.addEventListener('click',function(e){
+      var b=e.target.closest('[data-evidence]');if(!b)return;
+      if(b.dataset.evidence==='video'){
+        read.textContent='EVIDENCE MODE // 影像層：VHS 雜訊掩蓋了多數 CG 破綻，也掩蓋了一些不該出現的字。';
+      }else if(b.dataset.evidence==='transcript'){
+        read.textContent='TRANSCRIPT // 00:03:12 [呼吸聲] 00:04:48 [日光燈嗡鳴增強] 00:06:21 [遠處有第二個腳步聲]';
+      }else{
+        read.textContent='ANOMALY FRAME // 00:06:21 牆面防偽字：A-SYNC DID NOT BUILD THE FIRST DOOR。';
+        noteEvidence('evidence','CH-08 VHS 異常幀已入檔。影像證據和黑光層開始互相指認。');
+        markTask('evidence','VHS 異常幀已確認。錄像不是單純的影像證據。');
+        adjustEntity(8);
+      }
+    });
+  })();
 
   /* 滾動縮放字：滾動量 = 房間擴張倍率 */
   var zo=document.getElementById('zoomy'),zw=document.getElementById('zWord'),zs=document.getElementById('zSub');
@@ -1640,9 +2261,17 @@ body.noclip #app{animation:nc .55s steps(2) 2}
     zw.style.transform='scale('+(0.3+e*5.7).toFixed(3)+')';
     zs.classList.toggle('on',p<0.18);
   }
-  function ticks(){scrollyTick();zoomyTick();}
+  function ticks(){scrollyTick();zoomyTick();updateUvInk();}
   window.addEventListener('scroll',function(){requestAnimationFrame(ticks);},{passive:true});
   window.addEventListener('resize',function(){requestAnimationFrame(ticks);},{passive:true});
+  setInterval(function(){
+    if(document.body.classList.contains('lightsout')){
+      adjustBattery(runState.uvCount?-.9:-.55);
+      adjustEntity(.55);
+    }else if(runState.entity>0){
+      adjustEntity(-.18);
+    }
+  },1800);
 
   activate(location.hash.replace('#','')||'home');
   ticks();
