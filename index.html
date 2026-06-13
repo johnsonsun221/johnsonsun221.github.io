@@ -496,6 +496,27 @@ body.noclip #app{animation:nc .55s steps(2) 2}
 .vhs-btn::after{content:"";margin-left:5px;border-style:solid;
   border-width:14px 0 14px 24px;border-color:transparent transparent transparent #fffbe0}
 
+/* 事件倒數：斷層之夜 */
+.link-event .ix{color:var(--danger);animation:blink 1.2s steps(2) infinite}
+.cd{display:grid;grid-template-columns:repeat(4,1fr);border:2px solid var(--ink);margin:1.6rem 0 0}
+.cd .unit{padding:clamp(1rem,3vw,1.9rem) .4rem;text-align:center;border-right:1px solid var(--line);
+  background:rgba(255,246,194,.2);position:relative;overflow:hidden}
+.cd .unit:last-child{border-right:0}
+.cd .unit::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--danger);
+  transform:scaleX(0);transform-origin:left;animation:cdpulse 1s ease-in-out infinite}
+.cd .unit:nth-child(2)::before{animation-delay:.1s}
+.cd .unit:nth-child(3)::before{animation-delay:.2s}
+.cd .unit:nth-child(4)::before{animation-delay:.3s}
+@keyframes cdpulse{0%,100%{transform:scaleX(0)}50%{transform:scaleX(1)}}
+.cd b{display:block;font-family:var(--mono);font-weight:700;font-size:clamp(2.2rem,8vw,4.4rem);
+  line-height:1;color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.cd span{font-family:var(--mono);font-size:.66rem;letter-spacing:.22em;color:var(--ink-soft);margin-top:.3rem;display:block}
+.cd.live{border-color:var(--danger)}
+.cd.live b{color:var(--danger);animation:blink 1s steps(2) infinite}
+.cd-now{display:none;font-family:var(--disp);font-weight:700;font-size:clamp(1.6rem,5vw,2.6rem);
+  color:var(--danger);margin:1.6rem 0 0;letter-spacing:.04em}
+.cd.live + .cd-now{display:block;animation:blink 1.1s steps(2) infinite}
+
 /* 黑光防偽墨水：關燈後用手電筒顯形 */
 .view{position:relative}
 .uvfield{position:absolute;inset:0;pointer-events:none;z-index:5;overflow:hidden}
@@ -704,6 +725,7 @@ body.space-fold .corridor-depth{animation:spacepull .9s cubic-bezier(.2,.7,.2,1)
           <a data-go="fan-cred"><span class="ix">05</span><span>資深粉絲認證<small>CERTIFIED RESIDENT</small></span></a>
         </div>
       </li>
+      <li><a class="link link-event" data-go="event"><span class="ix">◉</span>事件倒數</a></li>
       <li><a class="link external-link" href="https://k9jlfxn6fx.mobirisesite.com" target="_blank" rel="noopener"><span class="ix">↗</span>原站</a></li>
     </ul>
     <button class="tool torch" id="torchBtn" title="關燈模式">○ 關燈</button>
@@ -1576,6 +1598,65 @@ body.space-fold .corridor-depth{animation:spacepull .9s cubic-bezier(.2,.7,.2,1)
 </section>
 </div>
 
+<!-- ============================================================ EVENT 事件倒數 ============================================================ -->
+<div class="view" id="view-event">
+<section class="hero wrap">
+  <div class="lights"></div>
+  <div class="hero-grid">
+    <div class="hero-main">
+      <span class="kicker">COMING SOON · 即將解封</span>
+      <h1 style="font-size:clamp(2.6rem,9vw,6.4rem)"><span class="glitch" data-text="斷層之夜">斷層之夜</span><span class="en">THE THINNING</span></h1>
+      <p class="lead">一年一度，現實與後室之間的牆會薄到幾乎消失。當這個倒數歸零的那一刻——整座檔案室的<strong>黑光會同時亮起</strong>，一份從未公開的層級將永久解封。把燈關掉，準備好你的手電筒。</p>
+      <div class="cd" id="cdGrid">
+        <div class="unit"><b id="cdD">--</b><span>天 DAYS</span></div>
+        <div class="unit"><b id="cdH">--</b><span>時 HOURS</span></div>
+        <div class="unit"><b id="cdM">--</b><span>分 MINS</span></div>
+        <div class="unit"><b id="cdS">--</b><span>秒 SECS</span></div>
+      </div>
+      <div class="cd-now">▸ THE THINNING IS NOW — 現實的牆，現在最薄。</div>
+      <div class="btn-row" style="margin-top:1.8rem">
+        <a class="btn btn-primary" id="cdCal" href="#" target="_blank" rel="noopener">提醒我 <span>▸</span></a>
+        <a class="btn btn-ghost" data-go="levels">先去探索層級</a>
+      </div>
+    </div>
+    <aside class="hero-side">
+      <div class="shead">// EVENT BRIEFING — 事件簡報</div>
+      <dl style="margin:0">
+        <div class="meta-row"><dt>事件代號 Code</dt><dd class="red">THE THINNING</dd></div>
+        <div class="meta-row"><dt>類型 Type</dt><dd>全域事件</dd></div>
+        <div class="meta-row"><dt>發生地 Where</dt><dd>所有層級 同時</dd></div>
+        <div class="meta-row"><dt>時間 When</dt><dd id="cdWhen">12/31 23:59</dd></div>
+        <div class="meta-row"><dt>持續 Duration</dt><dd>60 秒</dd></div>
+        <div class="meta-row"><dt>機密等級 Class</dt><dd class="red">CLASSIFIED</dd></div>
+      </dl>
+      <div class="btn-row"><a class="btn btn-ghost" data-go="survival" style="justify-content:center">先讀生存指南 ▸</a></div>
+    </aside>
+  </div>
+</section>
+
+<div class="marquee alt"><div>
+  <span>THE THINNING IS COMING</span><span>關掉燈</span><span>備好手電筒</span><span>牆正在變薄</span><span>THE THINNING IS COMING</span><span>關掉燈</span><span>備好手電筒</span><span>牆正在變薄</span>
+</div></div>
+
+<section class="wrap">
+  <div class="sec-head reveal"><span class="ix">!!</span>
+    <div><p class="eyebrow">// PROTOCOL — 當倒數歸零</p><h2 class="title">那一刻會發生什麼 <em>The Event</em></h2>
+    <p class="sub">這不是普通的更新。斷層之夜是一場限時 60 秒的全域事件——根據我多年的觀測，屆時會發生三件事。</p></div>
+  </div>
+  <div class="grid">
+    <article class="card reveal"><div class="num"><span>EVENT 01</span><span>◐</span></div><h3>全域黑光</h3>
+      <p>整座檔案室的隱形墨水會在同一秒亮起。平時要拿手電筒一個個找的字跡，那一刻將全部顯形——包括從沒有人掃到過的那幾行。</p></article>
+    <article class="card reveal"><div class="num"><span>EVENT 02</span><span>🔓</span></div><h3>新層級永久解封</h3>
+      <p>一份連我都還沒看過的加密檔案會被解開，並<strong>永久</strong>留在圖鑑裡——這是全站唯一一次「解鎖後不會在重整時歸零」的檔案。</p></article>
+    <article class="card reveal"><div class="num"><span>EVENT 03</span><span>↯</span></div><h3>現實最薄</h3>
+      <p>據說在這 60 秒內輸入穿牆咒語，墜落會比平常更深。沒有人證實過你會抵達哪裡——因為去到那裡的人，還沒回來說。</p></article>
+  </div>
+  <div class="note reveal" style="margin-top:2.5rem">
+    <b>檔案管理員筆記：</b> 這個倒數鎖定每年除夕 23:59「現實最薄之夜」。錯過了也別氣餒——牆，明年還會再薄一次。按上方<strong>提醒我</strong>把它加進你的行事曆。
+  </div>
+</section>
+</div>
+
 <!-- ===== 頁尾 ===== -->
 <footer>
   <div class="foot-grid">
@@ -1667,8 +1748,8 @@ body.space-fold .corridor-depth{animation:spacepull .9s cubic-bezier(.2,.7,.2,1)
 
 <script>
 (function(){
-  var views=['home','levels','entities','about','survival','fan-cred','level-404'];
-  var titleMap={home:'首頁',levels:'層級圖鑑',entities:'實體檔案',about:'關於後室',survival:'生存指南','fan-cred':'資深粉絲認證','level-404':'LEVEL 404 — ???'};
+  var views=['home','levels','entities','event','about','survival','fan-cred','level-404'];
+  var titleMap={home:'首頁',levels:'層級圖鑑',entities:'實體檔案',event:'斷層之夜 倒數',about:'關於後室',survival:'生存指南','fan-cred':'資深粉絲認證','level-404':'LEVEL 404 — ???'};
   var aboutGroup=['about','survival','fan-cred'];
   var root=document.documentElement;
   var uvWarn=document.getElementById('uvWarn');
@@ -2214,6 +2295,38 @@ body.space-fold .corridor-depth{animation:spacepull .9s cubic-bezier(.2,.7,.2,1)
     dexCount();
   });
   dexCount();
+
+  /* 事件倒數：斷層之夜（每年 12/31 23:59，自動滾動，永不過期） */
+  (function(){
+    var dEl=document.getElementById('cdD'),hEl=document.getElementById('cdH'),
+        mEl=document.getElementById('cdM'),sEl=document.getElementById('cdS'),
+        grid=document.getElementById('cdGrid'),cal=document.getElementById('cdCal'),whenEl=document.getElementById('cdWhen');
+    if(!grid)return;
+    function pad(n){return (n<10?'0':'')+n;}
+    function target(){var n=new Date();var t=new Date(n.getFullYear(),11,31,23,59,0,0);
+      if(t.getTime()<=n.getTime())t=new Date(n.getFullYear()+1,11,31,23,59,0,0);return t;}
+    function tick(){
+      var t=target(),diff=t.getTime()-Date.now();
+      var live=diff<=0;
+      grid.classList.toggle('live',live);
+      var s=Math.max(0,Math.floor(diff/1000));
+      var d=Math.floor(s/86400);s-=d*86400;
+      var h=Math.floor(s/3600);s-=h*3600;
+      var m=Math.floor(s/60);s-=m*60;
+      if(dEl)dEl.textContent=live?'00':d;
+      if(hEl)hEl.textContent=live?'00':pad(h);
+      if(mEl)mEl.textContent=live?'00':pad(m);
+      if(sEl)sEl.textContent=live?'00':pad(s);
+    }
+    var t=target(),end=new Date(t.getTime()+60000);
+    if(whenEl)whenEl.textContent=t.getFullYear()+'/12/31 23:59';
+    function z(dt){return dt.toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'');}
+    if(cal)cal.href='https://calendar.google.com/calendar/render?action=TEMPLATE'
+      +'&text='+encodeURIComponent('斷層之夜 THE THINNING — 後室現實最薄之夜')
+      +'&dates='+z(t)+'/'+z(end)
+      +'&details='+encodeURIComponent('當倒數歸零，後室檔案室的黑光將同時亮起，一份新層級永久解封。\nhttps://johnsonsun221.github.io/#event');
+    tick();setInterval(tick,1000);
+  })();
 
   /* 尋獲錄像：點擊才載入 YouTube 播放器 */
   var vp=document.getElementById('vhsPlay');
