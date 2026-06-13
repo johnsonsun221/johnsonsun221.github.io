@@ -598,10 +598,25 @@ body.battery-dead .blackout{background:radial-gradient(circle 92px at var(--mx) 
 .trace-row.found{color:#cfc790}.trace-row.found i{background:var(--safe);box-shadow:0 0 12px rgba(43,122,105,.55)}
 .trace-status{margin-top:.55rem;font-size:.68rem;line-height:1.55;color:#a99e63}
 .trace-status b{color:var(--cream);font-weight:400}
-.radio-strip{position:fixed;left:1rem;bottom:1rem;z-index:70;width:min(420px,calc(100vw - 2rem));
-  border:1px solid rgba(255,246,194,.24);background:rgba(7,6,2,.88);color:#cfc790;
-  font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;padding:.65rem .85rem;
-  box-shadow:var(--shadow);opacity:.82;pointer-events:none}
+/* 左下角 M.E.G. 無線電機（醒目可點，導向值班台） */
+.radio-dock{position:fixed;left:1rem;bottom:1rem;z-index:70;width:min(360px,calc(100vw - 2rem));
+  background:rgba(7,6,2,.95);border:2px solid var(--hazard);cursor:pointer;transition:transform .2s;
+  box-shadow:0 0 0 1px rgba(0,0,0,.45),0 18px 40px -18px rgba(0,0,0,.6),0 0 22px rgba(232,115,31,.32);
+  animation:radioGlow 3.6s ease-in-out infinite}
+.radio-dock:hover{transform:translateY(-3px);
+  box-shadow:0 0 0 1px rgba(0,0,0,.45),0 18px 40px -18px rgba(0,0,0,.6),0 0 42px rgba(232,115,31,.6)}
+@keyframes radioGlow{0%,100%{box-shadow:0 18px 40px -18px rgba(0,0,0,.6),0 0 16px rgba(232,115,31,.22)}
+  50%{box-shadow:0 18px 40px -18px rgba(0,0,0,.6),0 0 34px rgba(232,115,31,.55)}}
+.radio-head{display:flex;align-items:center;gap:.5rem;background:var(--hazard);color:#1a1206;
+  padding:.5rem .7rem;font-family:var(--mono);font-weight:700;font-size:.8rem;letter-spacing:.1em}
+.radio-live{width:11px;height:11px;border-radius:50%;background:#ff2a16;flex:0 0 auto;
+  box-shadow:0 0 10px 2px rgba(255,42,22,.9);animation:blink 1s steps(2) infinite}
+.radio-head b{flex:1}
+.radio-open{border:1px solid #1a1206;background:rgba(0,0,0,.16);color:#1a1206;font-family:var(--mono);
+  font-weight:700;font-size:.72rem;letter-spacing:.06em;padding:.34rem .62rem;cursor:pointer;white-space:nowrap}
+.radio-dock:hover .radio-open{background:#1a1206;color:var(--hazard)}
+.radio-strip{color:#e7dfb8;font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;
+  padding:.62rem .75rem;line-height:1.5}
 .radio-strip b{color:var(--hazard);margin-right:.45rem}
 .radio-strip.pulse{animation:nc .35s steps(2) 1}
 .drift-flash{position:fixed;inset:0;z-index:132;pointer-events:none;opacity:0;visibility:hidden;
@@ -1734,7 +1749,10 @@ body.space-fold .corridor-depth{animation:spacepull .9s cubic-bezier(.2,.7,.2,1)
     </div>
   </div>
 </aside>
-<div class="radio-strip" id="radioStrip"><b>M.E.G.</b><span>CH-00 待命中。若走廊開始回應你，先看值班台。</span></div>
+<div class="radio-dock" id="radioDock" role="button" tabindex="0" aria-label="開啟 M.E.G. 值班台">
+  <div class="radio-head"><span class="radio-live"></span><b>M.E.G. 無線電</b><button type="button" class="radio-open" id="radioOpen">▸ 開啟值班台</button></div>
+  <div class="radio-strip" id="radioStrip"><b>M.E.G.</b><span>CH-00 待命中。若走廊開始回應你，點這裡開啟值班台。</span></div>
+</div>
 <div class="drift-flash" id="driftFlash"></div>
 <div class="quiz-modal" id="quizModal" role="dialog" aria-modal="true" aria-label="住民權限審核">
   <div class="quiz-card">
@@ -2003,6 +2021,11 @@ body.space-fold .corridor-depth{animation:spacepull .9s cubic-bezier(.2,.7,.2,1)
     if(operatorPanel.classList.contains('open'))closeOperator();else openOperator();
   });
   if(operatorClose)operatorClose.addEventListener('click',closeOperator);
+  var radioDock=document.getElementById('radioDock');
+  if(radioDock){
+    radioDock.addEventListener('click',openOperator);
+    radioDock.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();openOperator();}});
+  }
   var radioScan=document.getElementById('radioScan');
   if(radioScan)radioScan.addEventListener('click',cycleRadio);
   var mapCalibrate=document.getElementById('mapCalibrate');
